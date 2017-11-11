@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<AnchorPane prefHeight="265.0" prefWidth="297.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SellerDialogController">
+   <children>
+      <Label layoutX="22.0" layoutY="23.0" text="id покупателя:" />
+      <Label layoutX="22.0" layoutY="50.0" text="Фамилия:" />
+      <Label layoutX="22.0" layoutY="80.0" text="Имя:" />
+      <Label layoutX="22.0" layoutY="109.0" text="Отчество:" />
+      <Label layoutX="22.0" layoutY="139.0" text="День рождения:" />
+      <Label layoutX="22.0" layoutY="170.0" text="id объекта:" />
+      <Label layoutX="22.0" layoutY="200.0" text="Телефон:" />
+      <CustomTextField fx:id="tf_seller" layoutX="137.0" layoutY="19.0" />
+      <TextField fx:id="tf_surname" layoutX="137.0" layoutY="46.0" />
+      <TextField fx:id="tf_name" layoutX="137.0" layoutY="76.0" />
+      <TextField fx:id="tf_patronymic" layoutX="137.0" layoutY="105.0" />
+      <TextField fx:id="tf_birthday" layoutX="137.0" layoutY="135.0" />
+      <TextField fx:id="tf_idobj_seller" layoutX="137.0" layoutY="166.0" />
+      <TextField fx:id="tf_phone_seller" layoutX="137.0" layoutY="196.0" />
+      <Button fx:id="btnAdd_from_addSeller" defaultButton="true" layoutX="137.0" layoutY="226.0" mnemonicParsing="false" onAction="#actionSave" text="Добавить" />
+      <Button fx:id="btnCancel_from_addSeller" cancelButton="true" layoutX="212.0" layoutY="226.0" mnemonicParsing="false" onAction="#actionClose" text="Отменить" />
+   </children>
+</AnchorPane>

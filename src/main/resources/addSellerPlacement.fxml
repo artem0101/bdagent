@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="434.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="10.0" layoutY="14.0" text="id:" />
+      <Label layoutX="10.0" layoutY="44.0" text="Фамилия:" />
+      <Label layoutX="10.0" layoutY="74.0" text="Имя:" />
+      <Label layoutX="10.0" layoutY="104.0" text="Отчество:" />
+      <Label layoutX="10.0" layoutY="134.0" text="День рождения:" />
+      <Label layoutX="10.0" layoutY="164.0" text="Телефон:" />
+      <Label layoutX="10.0" layoutY="194.0" text="id объекта:" />
+      <Label layoutX="10.0" layoutY="224.0" text="Район:" />
+      <Label layoutX="10.0" layoutY="254.0" text="Адрес:" />
+      <Label layoutX="10.0" layoutY="284.0" text="Цена:" />
+      <Label layoutX="10.0" layoutY="314.0" text="Количество этажей:" />
+      <Label layoutX="10.0" layoutY="344.0" text="Количество комнат:" />
+      <Label layoutX="10.0" layoutY="374.0" text="Площадь:" />
+      <TextField fx:id="tfIdSellerPlacement" layoutX="125.0" layoutY="10.0" prefWidth="155.0" />
+      <TextField fx:id="tfLastNameSellerPlacement" layoutX="125.0" layoutY="40.0" prefWidth="155.0" />
+      <TextField fx:id="tfFirstNameSellerPlacement" layoutX="125.0" layoutY="70.0" prefWidth="155.0" />
+      <TextField fx:id="tfPatronimycSellerPlacement" layoutX="125.0" layoutY="100.0" prefWidth="155.0" />
+      <TextField fx:id="tfBirthdaySellerPlacement" layoutX="125.0" layoutY="130.0" prefWidth="155.0" />
+      <TextField fx:id="tfPhoneSellerPlacement" layoutX="125.0" layoutY="160.0" prefWidth="155.0" />
+      <TextField fx:id="tfIdObjectPlacement" layoutX="125.0" layoutY="190.0" prefWidth="155.0" />
+      <TextField fx:id="tfDistinctPlacement" layoutX="125.0" layoutY="220.0" prefWidth="155.0" />
+      <TextField fx:id="tfAddressPlacement" layoutX="125.0" layoutY="250.0" prefWidth="155.0" />
+      <TextField fx:id="tfPricePlacement" layoutX="125.0" layoutY="280.0" prefWidth="155.0" />
+      <TextField fx:id="tfFloorsPlacement" layoutX="125.0" layoutY="310.0" prefWidth="155.0" />
+      <TextField fx:id="tfRoomsPlacement" layoutX="125.0" layoutY="340.0" prefWidth="155.0" />
+      <TextField fx:id="tfAreaPlacement" layoutX="125.0" layoutY="370.0" prefWidth="155.0" />
+      <Button defaultButton="true" layoutX="125.0" layoutY="400.0" mnemonicParsing="false" prefWidth="75.0" text="Сохранить" />
+      <Button cancelButton="true" layoutX="205.0" layoutY="400.0" mnemonicParsing="false" prefWidth="75.0" text="Отменить" />
+   </children>
+</AnchorPane>

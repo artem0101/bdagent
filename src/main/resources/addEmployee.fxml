@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EmployeeDialogController">
+   <children>
+      <Label layoutX="23.0" layoutY="35.0" text="id сотрудника:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label layoutX="14.0" layoutY="36.0" text="Фамилия:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
+      <Label layoutX="21.0" layoutY="90.0" text="Имя:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="70.0" />
+      <Label layoutX="21.0" layoutY="117.0" text="Отчество:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="21.0" layoutY="145.0" text="Должность:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="130.0" />
+      <TextField fx:id="tf_employee" layoutX="121.0" layoutY="5.0" text="" AnchorPane.topAnchor="5.0" />
+      <TextField fx:id="tf_surname" layoutX="121.0" layoutY="25.0" text="" AnchorPane.topAnchor="35.0" />
+      <TextField fx:id="tf_name" layoutX="121.0" layoutY="65.0" text="" />
+      <TextField fx:id="tf_patronymic" layoutX="121.0" layoutY="95.0" text="" />
+      <TextField fx:id="tf_post" layoutX="121.0" layoutY="125.0" text="" />
+      <Button fx:id="btnCancel_from_addEmpl" cancelButton="true" layoutX="207.0" layoutY="160.0" mnemonicParsing="false" onAction="#actionClose" text="Отменить" />
+      <Button fx:id="btnAdd_from_addEmpl" defaultButton="true" layoutX="121.0" layoutY="160.0" mnemonicParsing="false" onAction="#actionSave" text="Добавить" />
+      <Label fx:id="test" layoutX="14.0" layoutY="165.0" text="Label" />
+   </children>
+</AnchorPane>
