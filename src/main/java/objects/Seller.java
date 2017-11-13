@@ -7,7 +7,7 @@ public class Seller {
     private SimpleStringProperty lastName = new SimpleStringProperty("");
     private SimpleStringProperty firstName = new SimpleStringProperty("");
     private SimpleStringProperty patronymic = new SimpleStringProperty("");
-    private SimpleStringProperty birthDate = new SimpleStringProperty("");
+    private SimpleStringProperty birthday = new SimpleStringProperty("");
     private SimpleStringProperty objId = new SimpleStringProperty("");
     private SimpleStringProperty phone = new SimpleStringProperty("");
 
@@ -21,7 +21,7 @@ public class Seller {
         this.lastName = new SimpleStringProperty(lastName);
         this.firstName = new SimpleStringProperty(firstName);
         this.patronymic = new SimpleStringProperty(patronymic);
-        this.birthDate = new SimpleStringProperty(birthDate);
+        this.birthday = new SimpleStringProperty(birthDate);
         this.objId = new SimpleStringProperty(objId);
         this.phone = new SimpleStringProperty(phone);
     }
@@ -75,15 +75,15 @@ public class Seller {
     }
 
     public String getBrthDate() {
-        return birthDate.get();
+        return birthday.get();
     }
 
     public SimpleStringProperty brthDateProperty() {
-        return birthDate;
+        return birthday;
     }
 
     public void setBrthDate(String brthDate) {
-        this.birthDate.set(brthDate);
+        this.birthday.set(brthDate);
     }
 
     public String getObjId() {
@@ -117,7 +117,7 @@ public class Seller {
                 ", lastName=" + lastName +
                 ", firstName=" + firstName +
                 ", patronymic=" + patronymic +
-                ", birthDate=" + birthDate +
+                ", birthDate=" + birthday +
                 ", objId=" + objId +
                 ", phone=" + phone +
                 '}';
