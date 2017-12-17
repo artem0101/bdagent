@@ -15,13 +15,13 @@ public class Seller {
     }
 
     public Seller(String id, String lastName, String firstName,
-                  String patronymic, String birthDate, String objId,
+                  String patronymic, String birthday, String objId,
                   String phone) {
         this.id = new SimpleStringProperty(id);
         this.lastName = new SimpleStringProperty(lastName);
         this.firstName = new SimpleStringProperty(firstName);
         this.patronymic = new SimpleStringProperty(patronymic);
-        this.birthday = new SimpleStringProperty(birthDate);
+        this.birthday = new SimpleStringProperty(birthday);
         this.objId = new SimpleStringProperty(objId);
         this.phone = new SimpleStringProperty(phone);
     }

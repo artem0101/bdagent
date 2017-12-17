@@ -21,9 +21,10 @@ public class CollectionHouse implements MainObjectInterface<House> {
         return houseObservableList;
     }
 
-    public void fillTestDataHouse() {
+    public ObservableList<House> fillTestDataHouse() {
         houseObservableList.add(new House("20001", "Ленинский", "Краснознамённая", "2400000", "2", "5", "270", "70"));
         houseObservableList.add(new House("20002", "Ленинский", "Красноармейская", "2600000", "1", "4", "250", "40"));
+        return houseObservableList;
     }
 
     public House latest() {

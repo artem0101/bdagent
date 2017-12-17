@@ -14,7 +14,7 @@
 
 <!--<?import org.controlsfx.control.textfield.CustomTextField?>-->
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SellerHouseController">
     <fx:define>
         <String fx:id="homeValue" fx:value="home.fxml" />
         <String fx:id="apartmentValue" fx:value="apartment.fxml" />
@@ -91,7 +91,7 @@
                                 <TableColumn fx:id="tbPriceHouse" prefWidth="75.0" text="Цена" />
                                 <TableColumn fx:id="tbFloorsHouse" prefWidth="75.0" text="Этажей" />
                                 <TableColumn fx:id="tbRoomsHouse" prefWidth="75.0" text="Комнат" />
-                                <TableColumn fx:id="tbAreaGroundHouse" prefWidth="99.0" text="Площадь земли" />
+                                <TableColumn fx:id="tbGroundHouse" prefWidth="99.0" text="Площадь земли" />
                                 <TableColumn fx:id="tbAreaHouse" prefWidth="100.0" text="Площадь дома" />
                             </columns>
                             <columnResizePolicy>

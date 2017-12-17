@@ -1,5 +1,6 @@
 package controllers;
 
+import interfaces.CollectionHouse;
 import interfaces.CollectionSeller;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import objects.House;
 import objects.Seller;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
@@ -24,16 +26,18 @@ import utils.DialogManager;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-
-public class SellerController {
+public class SellerHouseController {
     private CollectionSeller collectionSeller = new CollectionSeller();
+    private CollectionHouse collectionHouse = new CollectionHouse();
     private Stage mainStage;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader = new FXMLLoader();
     private SellerDialogController sellerDialogController;
     private Stage editDialogStage;
     private Stage newEditDialogStage;
-    private ObservableList<Seller> backupList;
+    private ObservableList<Seller> backupListSeller;
+    private ObservableList<House> backupListHouse;
+    private ObservableList<House> secondBackupListHouse;
     static AnchorPane an;
     OnCreateStage creating = new OnCreateStage();
 
@@ -75,12 +79,34 @@ public class SellerController {
     private Label labelCountSeller;
 
     @FXML
-    private static AnchorPane splitpane_Seller;
-
-    @FXML
     private ChoiceBox choiceObj;
 
+    @FXML
+    private TableView tableHouse;
 
+    @FXML
+    private TableColumn<House, String> tbIdHouse;
+
+    @FXML
+    private TableColumn<House, String> tbDistinctHouse;
+
+    @FXML
+    private TableColumn<House, String> tbAddresshouse;
+
+    @FXML
+    private TableColumn<House, String> tbPriceHouse;
+
+    @FXML
+    private TableColumn<House, String> tbFloorsHouse;
+
+    @FXML
+    private TableColumn<House, String> tbRoomsHouse;
+
+    @FXML
+    private TableColumn<House, String> tbGroundHouse;
+
+    @FXML
+    private TableColumn<House, String> tbAreaHouse;
 
 
 
@@ -98,10 +124,25 @@ public class SellerController {
         tableIdObjectSeller.setCellValueFactory(new PropertyValueFactory<>("ObjId"));///ObjId
         tablePhoneSeller.setCellValueFactory(new PropertyValueFactory<>("Phone"));
 
-        collectionSeller.fillTestDataSeller();
-        backupList = FXCollections.observableArrayList();
-        backupList.addAll(collectionSeller.getSellerList());
-        tableSeller.setItems(collectionSeller.getSellerList());
+
+        tbIdHouse.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tbDistinctHouse.setCellValueFactory(new PropertyValueFactory<>("Distinct"));
+        tbAddresshouse.setCellValueFactory(new PropertyValueFactory<>("Address"));
+        tbPriceHouse.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        tbFloorsHouse.setCellValueFactory(new PropertyValueFactory<>("Floors"));
+        tbRoomsHouse.setCellValueFactory(new PropertyValueFactory<>("Rooms"));
+        tbGroundHouse.setCellValueFactory(new PropertyValueFactory<House, String>("ground"));
+        tbAreaHouse.setCellValueFactory(new PropertyValueFactory<House, String>("house"));
+
+        collectionSeller.fillTestDataSellerHouse();
+        backupListSeller = FXCollections.observableArrayList();
+        backupListSeller.addAll(collectionSeller.fillTestDataSellerHouse());
+        tableSeller.setItems(collectionSeller.fillTestDataSellerHouse());
+
+        collectionHouse.fillTestDataHouse();
+        backupListHouse = FXCollections.observableArrayList();
+        backupListHouse.addAll(collectionHouse.getHouseObservableList());
+        secondBackupListHouse = FXCollections.observableArrayList();
 
         initListener();
         initLoader();
@@ -115,6 +156,25 @@ public class SellerController {
             if (event.getClickCount() == 2) {
                 sellerDialogController.setSeller((Seller) tableSeller.getSelectionModel().getSelectedItem());
                 showDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
+            } else if (event.getClickCount() == 1) {
+                collectionHouse.getHouseObservableList().clear();
+                secondBackupListHouse.clear();
+                if (tableHouse.getSelectionModel().getSelectedItems().isEmpty()) {
+                    tableHouse.getItems().clear();
+                    Seller sellerHouse = (Seller) tableSeller.getSelectionModel().getSelectedItem();
+                    System.out.println(sellerHouse.toString());
+                    for (House house : backupListHouse) {
+                        if (sellerHouse.getObjId().equalsIgnoreCase(house.getId())) {
+//                            secondBackupListHouse.removeAll();
+
+                            secondBackupListHouse.add(house);
+                            tableHouse.setItems(secondBackupListHouse);
+                        }
+                    }
+                } else {
+                    tableHouse.getSelectionModel().getSelectedItems().clear();
+                }
+
             }
         });
     }
@@ -164,7 +224,7 @@ public class SellerController {
                         !sellerDialogController.getSeller().getObjId().equals("") ||
                         !sellerDialogController.getSeller().getPhone().equals("")) {
                     collectionSeller.add(sellerDialogController.getSeller());
-                    backupList.add(collectionSeller.lasted());
+                    backupListSeller.add(collectionSeller.lasted());
                 }
                 System.out.println("add " + selectedSeller);
                 break;
@@ -174,7 +234,7 @@ public class SellerController {
                 showDialog(editDialogStage);
                 sellerDialogController.setSeller(selectedSeller);
                 collectionSeller.getSellerList().clear();
-                collectionSeller.getSellerList().addAll(backupList);
+                collectionSeller.getSellerList().addAll(backupListSeller);
                 System.out.println(selectedSeller);
                 break;
             case "btnDeleteSeller":
@@ -233,14 +293,13 @@ public class SellerController {
     }
 
     public void choiceCalc(ActionEvent actionEvent) {
-        if (choiceObj.getValue().equals("Дома")) {
-            optionsForNewWindow(actionEvent, "../sellerHouse.fxml", "Продавцы");
-        } else if (choiceObj.getValue().equals("Земельные участки")) {
+        if (choiceObj.getValue().equals("Земельные участки")) {
             optionsForNewWindow(actionEvent, "../sellerGround.fxml", "Продавцы");
         } else if (choiceObj.getValue().equals("Нежелые помещения")) {
             optionsForNewWindow(actionEvent, "../sellerPlacement.fxml", "Продавцы");
         } else if (choiceObj.getValue().equals("Квартиры")) {
             optionsForNewWindow(actionEvent, "../sellerApartment.fxml", "Продавцы");
         }
+
     }
 }

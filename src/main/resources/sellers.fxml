@@ -14,7 +14,7 @@
 
 <!--<?import org.controlsfx.control.textfield.CustomTextField?>-->
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SellerController">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SellerController">
     <left>
         <AnchorPane maxWidth="-Infinity" prefHeight="400.0" prefWidth="150.0" BorderPane.alignment="CENTER">
             <children>
