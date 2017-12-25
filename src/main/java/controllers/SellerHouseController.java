@@ -32,7 +32,7 @@ public class SellerHouseController {
     private Stage mainStage;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader = new FXMLLoader();
-    private SellerDialogController sellerDialogController;
+    private SellerHouseDialogController sellerHouseDialogController;
     private Stage editDialogStage;
     private Stage newEditDialogStage;
     private ObservableList<Seller> backupListSeller;
@@ -151,10 +151,14 @@ public class SellerHouseController {
 
     private void initListener() {
         collectionSeller.getSellerList().addListener((ListChangeListener<Seller>) c -> updateCountLabel());
-
         tableSeller.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                sellerDialogController.setSeller((Seller) tableSeller.getSelectionModel().getSelectedItem());
+                Seller sellerHouse = (Seller) tableSeller.getSelectionModel().getSelectedItem();
+                backupListHouse.forEach(backupHouse -> {
+                    if (backupHouse.getId().equalsIgnoreCase(sellerHouse.getObjId()))
+                        sellerHouseDialogController.setSeller(sellerHouse, backupHouse);
+
+                });
                 showDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
             } else if (event.getClickCount() == 1) {
                 collectionHouse.getHouseObservableList().clear();
@@ -162,11 +166,8 @@ public class SellerHouseController {
                 if (tableHouse.getSelectionModel().getSelectedItems().isEmpty()) {
                     tableHouse.getItems().clear();
                     Seller sellerHouse = (Seller) tableSeller.getSelectionModel().getSelectedItem();
-                    System.out.println(sellerHouse.toString());
                     for (House house : backupListHouse) {
                         if (sellerHouse.getObjId().equalsIgnoreCase(house.getId())) {
-//                            secondBackupListHouse.removeAll();
-
                             secondBackupListHouse.add(house);
                             tableHouse.setItems(secondBackupListHouse);
                         }
@@ -182,9 +183,9 @@ public class SellerHouseController {
 
     private void initLoader() {
         try {
-            fxmlLoader.setLocation(getClass().getResource("../addSeller.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("../addSellerHouse.fxml"));
             fxmlEdit = fxmlLoader.load();
-            sellerDialogController = fxmlLoader.getController();
+            sellerHouseDialogController = fxmlLoader.getController();
         } catch (IOException exc) {
             exc.printStackTrace();
         }
@@ -209,21 +210,27 @@ public class SellerHouseController {
         if (!(source instanceof Button)) return;
         Button clickedButton = (Button) source;
         Seller selectedSeller = (Seller) tableSeller.getSelectionModel().getSelectedItem();
-        sellerDialogController.setSeller(selectedSeller);
+//        sellerHouseDialogController.setSeller(selectedSeller);
 
         switch (clickedButton.getId()) {
             case "btnAddSeller":
                 editDialogStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                sellerDialogController.setSeller(new Seller());
+                sellerHouseDialogController.setSeller(new Seller(), new House());
                 showDialog(editDialogStage);
-                if (!sellerDialogController.getSeller().getId().equals("") ||
-                        !sellerDialogController.getSeller().getLastName().equals("") ||
-                        !sellerDialogController.getSeller().getFirstName().equals("") ||
-                        !sellerDialogController.getSeller().getPatronymic().equals("") ||
-                        !sellerDialogController.getSeller().getBrthDate().equals("") ||
-                        !sellerDialogController.getSeller().getObjId().equals("") ||
-                        !sellerDialogController.getSeller().getPhone().equals("")) {
-                    collectionSeller.add(sellerDialogController.getSeller());
+                if (!sellerHouseDialogController.getSeller().getId().equals("") ||
+                        !sellerHouseDialogController.getSeller().getLastName().equals("") ||
+                        !sellerHouseDialogController.getSeller().getFirstName().equals("") ||
+                        !sellerHouseDialogController.getSeller().getPatronymic().equals("") ||
+                        !sellerHouseDialogController.getSeller().getBrthDate().equals("") ||
+                        !sellerHouseDialogController.getSeller().getObjId().equals("") ||
+                        !sellerHouseDialogController.getSeller().getPhone().equals("") ||
+                        !sellerHouseDialogController.getHouse().getDistinct().equals("") ||
+                        !sellerHouseDialogController.getHouse().getAddress().equals("") ||
+                        !sellerHouseDialogController.getHouse().getFloors().equals("") ||
+                        !sellerHouseDialogController.getHouse().getArea_ground().equals("") ||
+                        !sellerHouseDialogController.getHouse().getArea_house().equals("")) {
+                    collectionSeller.add(sellerHouseDialogController.getSeller());
+                    collectionHouse.add(sellerHouseDialogController.getHouse());
                     backupListSeller.add(collectionSeller.lasted());
                 }
                 System.out.println("add " + selectedSeller);
@@ -232,7 +239,7 @@ public class SellerHouseController {
                 if (!sellerIsSelected(selectedSeller)) return;
                 editDialogStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 showDialog(editDialogStage);
-                sellerDialogController.setSeller(selectedSeller);
+//                sellerHouseDialogController.setSeller(selectedSeller);
                 collectionSeller.getSellerList().clear();
                 collectionSeller.getSellerList().addAll(backupListSeller);
                 System.out.println(selectedSeller);

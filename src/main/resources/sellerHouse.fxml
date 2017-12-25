@@ -45,7 +45,7 @@
                 <Button fx:id="btn_search_seller_Seller" layoutX="74.0" layoutY="89.0" mnemonicParsing="false" text="Поиск" />
                 <Button fx:id="btnDeleteSeller" layoutX="64.0" layoutY="461.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Удалить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="66.0" />
                 <Button fx:id="btnEditSeller" layoutX="64.0" layoutY="428.0" mnemonicParsing="false" text="Изменить" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="66.0" />
-                <Button fx:id="btnAddSeller" layoutX="62.0" layoutY="396.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="64.0" />
+                <Button fx:id="btnAddSeller" layoutX="62.0" layoutY="396.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="64.0" onAction="#actionButtonPressed"/>
                 <ChoiceBox fx:id="choiceObj" layoutX="24.0" layoutY="126.0" prefWidth="150.0" value="Дома">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
