@@ -58,7 +58,7 @@ public class SellerHouseDialogController {
     }
 
     public void  setSeller(Seller seller, House house) {
-        if (seller == null) return;
+        if (seller == null || house == null) return;
         this.seller = seller;
         this.house = house;
         tfIdSellerHouse.setText(seller.getId());
@@ -73,6 +73,8 @@ public class SellerHouseDialogController {
         tfFloorsHouse.setText(house.getFloors());
         tfAreaGroundHouse.setText(house.getArea_ground());
         tfAreaHouse.setText(house.getArea_house());
+
+        System.out.println();
     }
 
     public void actionSave(ActionEvent actionEvent) {

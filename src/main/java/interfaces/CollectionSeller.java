@@ -26,6 +26,19 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
     public ObservableList<Seller> getSellerList() {
         return sellerList;
     }
+    public ObservableList<Seller> fillTestDataSellerHouse() {
+//        sellerHouse.clear();
+        sellerList.clear();
+//        fillTestDataSeller();
+        for (Seller seller : fillTestDataSeller()) {
+            for (House house : collectionHouse) {
+                if (seller.getObjId().equals(house.getId())) {
+                    sellerHouse.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getLastName(), seller.getPatronymic(), seller.getObjId(), seller.getPhone()));
+                }
+            }
+        }
+        return sellerHouse;
+    }
 
     public void print() {
         int number = 0;
@@ -52,22 +65,7 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
         return sellerList;
     }
 
-    public ObservableList<Seller> fillTestDataSellerHouse() {
-        sellerHouse.clear();
-        sellerList.clear();
-//        fillTestDataSeller();
-        for (Seller seller : fillTestDataSeller()) {
-//            System.out.println("111111" + seller);
-            for (House house : collectionHouse) {
-                if (seller.getObjId().equals(house.getId())) {
-                    sellerHouse.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getLastName(), seller.getPatronymic(), seller.getObjId(), seller.getPhone()));
-//                    System.out.println("EEEEE");
-                }
-            }
-        }
-//        for (Seller seller : sellerHouse) System.out.println(seller.toString());
-        return sellerHouse;
-    }
+
 
 
 }

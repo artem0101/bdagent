@@ -38,7 +38,7 @@
                 <Button fx:id="btn_search_seller_Seller" layoutX="71.0" layoutY="82.0" mnemonicParsing="false" text="Поиск" />
             <Button fx:id="btnDeleteSeller" layoutX="65.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="70.0" text="Удалить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" />
             <Button fx:id="btnEditSeller" layoutX="65.0" layoutY="429.0" mnemonicParsing="false" onAction="#actionButtonPressed" text="Изменить" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" />
-            <Button fx:id="btnAddSeller" disable="true" layoutX="63.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="63.0" />
+            <Button fx:id="btnAddSeller"  layoutX="63.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="63.0" />
             <ChoiceBox fx:id="choiceObj" layoutX="22.0" layoutY="120.0" onAction="#choiceCalc" prefWidth="150.0" value=" " onContextMenuRequested="#choiceCalc">
                     <items>
                         <FXCollections fx:factory="observableArrayList">

@@ -37,7 +37,6 @@ public class SellerController {
     static AnchorPane an;
     OnCreateStage creating = new OnCreateStage();
 
-    Button but;
 
 
 //    @FXML
@@ -75,12 +74,7 @@ public class SellerController {
     private Label labelCountSeller;
 
     @FXML
-    private static AnchorPane splitpane_Seller;
-
-    @FXML
     private ChoiceBox choiceObj;
-
-
 
 
 
