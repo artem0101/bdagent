@@ -5,11 +5,11 @@ import javafx.collections.ObservableList;
 import objects.House;
 import objects.Seller;
 
-import java.util.Collection;
 
 public class CollectionSeller implements MainObjectInterface<Seller> {
     private ObservableList<Seller> sellerList = FXCollections.observableArrayList();
     private ObservableList<Seller> sellerHouse = FXCollections.observableArrayList();
+    private ObservableList<Seller> backupListSeller = FXCollections.observableArrayList();
     private ObservableList<House> collectionHouse = FXCollections.observableArrayList(new CollectionHouse().fillTestDataHouse());
 //    private House house = new House();
 
@@ -26,11 +26,31 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
     public ObservableList<Seller> getSellerList() {
         return sellerList;
     }
+
+    public ObservableList<Seller> getSellerHouse() {
+//        sellerHouse.addAll(this.fillTestDataSeller());
+        backupListSeller.forEach(backupSeller -> {
+
+        });
+
+        if (sellerList.isEmpty()) backupListSeller.addAll(fillTestDataSeller());
+        else if (!backupListSeller.containsAll(getSellerList())){
+            backupListSeller.addAll(getSellerList()); // --
+        } else {
+            getSellerList().forEach(getSeller -> {
+                if (!backupListSeller.contains(getSeller)) backupListSeller.add(getSeller);
+            });
+        }
+        System.out.println(backupListSeller.size());
+        return backupListSeller;
+    }
+
     public ObservableList<Seller> fillTestDataSellerHouse() {
-//        sellerHouse.clear();
         sellerList.clear();
+        sellerList.addAll(getSellerHouse());
+        System.out.println(getSellerHouse().size());
 //        fillTestDataSeller();
-        for (Seller seller : fillTestDataSeller()) {
+        for (Seller seller : sellerList) {
             for (House house : collectionHouse) {
                 if (seller.getObjId().equals(house.getId())) {
                     sellerHouse.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getLastName(), seller.getPatronymic(), seller.getObjId(), seller.getPhone()));

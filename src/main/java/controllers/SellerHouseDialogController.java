@@ -73,8 +73,6 @@ public class SellerHouseDialogController {
         tfFloorsHouse.setText(house.getFloors());
         tfAreaGroundHouse.setText(house.getArea_ground());
         tfAreaHouse.setText(house.getArea_house());
-
-        System.out.println();
     }
 
     public void actionSave(ActionEvent actionEvent) {

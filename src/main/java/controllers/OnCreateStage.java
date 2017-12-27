@@ -11,8 +11,8 @@ import java.io.IOException;
 
 public class OnCreateStage {
 //    private static FXMLLoader fxmlLoader = new FXMLLoader();
-    private Stage app_stage, creating_stage, dialogStage;
-    private static Parent fxmlStage, parent;
+    private Stage app_stage, creating_stage;
+    private static Parent fxmlStage;
     private int width, height;
 
     public void onCreateStage(ActionEvent actionEvent, String fxmlLocation, String title) {

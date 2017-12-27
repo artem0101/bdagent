@@ -28,21 +28,19 @@ import java.lang.reflect.Method;
 
 public class SellerHouseController {
     private CollectionSeller collectionSellerHouse = new CollectionSeller();
-    private CollectionSeller collectionSeller = new CollectionSeller();
+//    private CollectionSeller collectionSeller = new CollectionSeller();
     private CollectionHouse collectionHouse = new CollectionHouse();
-    private Stage mainStage;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader = new FXMLLoader();
     private SellerHouseDialogController sellerHouseDialogController;
     private Stage editDialogStage;
     private Stage newEditDialogStage;
-    private ObservableList<Seller> backupListSeller;
+//    private ObservableList<Seller> backupListSeller;
     private ObservableList<Seller> backupListSellerHouse;
     private ObservableList<House> backupListHouse;
     private ObservableList<House> secondBackupListHouse;
-    static AnchorPane an;
-    static House selectedHouseSeller;
-    OnCreateStage creating = new OnCreateStage();
+    private static House selectedHouseSeller;
+    private OnCreateStage creating = new OnCreateStage();
 
 //    @FXML
 //    private CustomTextField tfSearchSeller;
@@ -128,17 +126,17 @@ public class SellerHouseController {
         tbPriceHouse.setCellValueFactory(new PropertyValueFactory<>("Price"));
         tbFloorsHouse.setCellValueFactory(new PropertyValueFactory<>("Floors"));
         tbRoomsHouse.setCellValueFactory(new PropertyValueFactory<>("Rooms"));
-        tbGroundHouse.setCellValueFactory(new PropertyValueFactory<House, String>("ground"));
-        tbAreaHouse.setCellValueFactory(new PropertyValueFactory<House, String>("house"));
+        tbGroundHouse.setCellValueFactory(new PropertyValueFactory<>("ground"));
+        tbAreaHouse.setCellValueFactory(new PropertyValueFactory<>("house"));
 
-        collectionSeller.fillTestDataSeller();
-        backupListSeller = FXCollections.observableArrayList();
-        backupListSeller.addAll(collectionSeller.getSellerList());
+//        collectionSeller.fillTestDataSeller();
+//        backupListSeller = FXCollections.observableArrayList();
+//        backupListSeller.addAll(collectionSeller.getSellerList());
 
         collectionSellerHouse.fillTestDataSellerHouse();
         backupListSellerHouse = FXCollections.observableArrayList();
         backupListSellerHouse.addAll(collectionSellerHouse.fillTestDataSellerHouse());
-        tableSeller.setItems(collectionSeller.fillTestDataSellerHouse());
+        tableSeller.setItems(collectionSellerHouse.fillTestDataSellerHouse());
 
         collectionHouse.fillTestDataHouse();
         backupListHouse = FXCollections.observableArrayList();
@@ -236,13 +234,14 @@ public class SellerHouseController {
                         !sellerHouseDialogController.getHouse().getRooms().equals("") ||
                         !sellerHouseDialogController.getHouse().getArea_ground().equals("") ||
                         !sellerHouseDialogController.getHouse().getArea_house().equals("")) {
-                    collectionSeller.add(sellerHouseDialogController.getSeller());
                     collectionSellerHouse.add(sellerHouseDialogController.getSeller());
                     collectionHouse.add(sellerHouseDialogController.getHouse());
+
                     System.out.println(sellerHouseDialogController.getSeller().toString() + "\n" +
                             sellerHouseDialogController.getHouse().toString());
 //                    backupListSellerHouse.add(collectionSellerHouse.lasted());
-                    backupListSeller.add(collectionSellerHouse.lasted());
+                    collectionSellerHouse.add(sellerHouseDialogController.getSeller());
+                    backupListSellerHouse.add(collectionSellerHouse.lasted());
                     backupListHouse.add(collectionHouse.latest());
                 }
                 System.out.println("add " + selectedSeller);
@@ -319,6 +318,5 @@ public class SellerHouseController {
         } else if (choiceObj.getValue().equals("Квартиры")) {
             optionsForNewWindow(actionEvent, "../sellerApartment.fxml", "Продавцы");
         }
-
     }
 }

@@ -27,16 +27,13 @@ import java.lang.reflect.Method;
 
 public class SellerController {
     private CollectionSeller collectionSeller = new CollectionSeller();
-    private Stage mainStage;
     private Parent fxmlEdit;
     private FXMLLoader fxmlLoader = new FXMLLoader();
     private SellerDialogController sellerDialogController;
     private Stage editDialogStage;
     private Stage newEditDialogStage;
     private ObservableList<Seller> backupList;
-    static AnchorPane an;
-    OnCreateStage creating = new OnCreateStage();
-
+    private OnCreateStage creating = new OnCreateStage();
 
 
 //    @FXML
@@ -75,8 +72,6 @@ public class SellerController {
 
     @FXML
     private ChoiceBox choiceObj;
-
-
 
 
     @FXML
