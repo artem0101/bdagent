@@ -27,36 +27,41 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
         return sellerList;
     }
 
-    public ObservableList<Seller> getSellerHouse() {
+//    public ObservableList<Seller> getSellerHouse() {
 //        sellerHouse.addAll(this.fillTestDataSeller());
-        backupListSeller.forEach(backupSeller -> {
-
-        });
-
-        if (sellerList.isEmpty()) backupListSeller.addAll(fillTestDataSeller());
-        else if (!backupListSeller.containsAll(getSellerList())){
-            backupListSeller.addAll(getSellerList()); // --
-        } else {
-            getSellerList().forEach(getSeller -> {
-                if (!backupListSeller.contains(getSeller)) backupListSeller.add(getSeller);
-            });
-        }
-        System.out.println(backupListSeller.size());
-        return backupListSeller;
-    }
+//        if (backupListSeller.isEmpty()) sellerHouse.forEach(getSeller -> {
+//            if (!backupListSeller.contains(getSeller)) backupListSeller.add(getSeller);
+//        });
+//        else if (!backupListSeller.containsAll(getSellerList())){
+////            backupListSeller.addAll(getSellerList()); // --
+//        } else {
+////            getSellerList().forEach(getSeller -> {
+////                if (!backupListSeller.contains(getSeller)) backupListSeller.add(getSeller);
+////            });
+//        }
+//        System.out.println("getSellerHouse " + backupListSeller.size());
+//        return backupListSeller;
+//    }
 
     public ObservableList<Seller> fillTestDataSellerHouse() {
         sellerList.clear();
-        sellerList.addAll(getSellerHouse());
-        System.out.println(getSellerHouse().size());
+        sellerHouse.clear();
+//        sellerList.addAll(getSellerList());
+        if (sellerList.isEmpty()) fillTestDataSeller();
+//        System.out.println("fillTestDataSellerHouse " + getSellerHouse().size());
 //        fillTestDataSeller();
         for (Seller seller : sellerList) {
             for (House house : collectionHouse) {
-                if (seller.getObjId().equals(house.getId())) {
-                    sellerHouse.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getLastName(), seller.getPatronymic(), seller.getObjId(), seller.getPhone()));
+                if (seller.getObjId().equals(house.getId()) && !sellerHouse.contains(seller)) {
+                    sellerHouse.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getPatronymic(), seller.getBrthDate(), seller.getObjId(), seller.getPhone()));
                 }
             }
         }
+        sellerHouse.forEach(h -> System.out.println(h.toString()));
+        return sellerHouse;
+    }
+
+    public ObservableList<Seller> getSellerHouse() {
         return sellerHouse;
     }
 

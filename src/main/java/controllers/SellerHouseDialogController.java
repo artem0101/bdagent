@@ -39,7 +39,13 @@ public class SellerHouseDialogController {
     private TextField tfAddressHouse;
 
     @FXML
+    private TextField tfPriceHouse;
+
+    @FXML
     private TextField tfFloorsHouse;
+
+    @FXML
+    private TextField tfRoomsHouse;
 
     @FXML
     private TextField tfAreaGroundHouse;
@@ -69,8 +75,10 @@ public class SellerHouseDialogController {
         tfPhoneSellerHouse.setText(seller.getPhone());
         tfIdObjectHouse.setText(seller.getObjId());
         tfDistinctHouse.setText(house.getDistinct());
+        tfPriceHouse.setText(house.getPrice());
         tfAddressHouse.setText(house.getAddress());
         tfFloorsHouse.setText(house.getFloors());
+        tfRoomsHouse.setText(house.getRooms());
         tfAreaGroundHouse.setText(house.getArea_ground());
         tfAreaHouse.setText(house.getArea_house());
     }
@@ -80,7 +88,8 @@ public class SellerHouseDialogController {
                 tfFirstNameSellerHouse.getText().equals("") || tfPatronimycSellerHouse.getText().equals("") ||
                 tfBirthdaySellerHouse.getText().equals("") || tfPhoneSellerHouse.getText().equals("") ||
                 tfIdObjectHouse.getText().equals("") || tfDistinctHouse.getText().equals("") ||
-                tfAddressHouse.getText().equals("") || tfFloorsHouse.getText().equals("") ||
+                tfPriceHouse.getText().equals("") || tfAddressHouse.getText().equals("") ||
+                tfFloorsHouse.getText().equals("") || tfRoomsHouse.getText().equals("") ||
                 tfAreaGroundHouse.getText().equals("") || tfAreaHouse.getText().equals("")) {
             DialogManager.showInfoDialog("Ошибка", "Введены не все данные");
         } else {
@@ -94,7 +103,9 @@ public class SellerHouseDialogController {
             house.setId(tfIdObjectHouse.getText());
             house.setDistinct(tfDistinctHouse.getText());
             house.setAddress(tfAddressHouse.getText());
+            house.setPrice(tfPriceHouse.getText());
             house.setFloors(tfFloorsHouse.getText());
+            house.setRooms(tfRoomsHouse.getText());
             house.setArea_ground(tfAreaGroundHouse.getText());
             house.setArea_house(tfAreaHouse.getText());
             actionClose(actionEvent);
