@@ -9,7 +9,6 @@ import objects.Seller;
 public class CollectionSeller implements MainObjectInterface<Seller> {
     private ObservableList<Seller> sellerList = FXCollections.observableArrayList();
     private ObservableList<Seller> sellerHouse = FXCollections.observableArrayList();
-    private ObservableList<Seller> backupListSeller = FXCollections.observableArrayList();
     private ObservableList<House> collectionHouse = FXCollections.observableArrayList(new CollectionHouse().fillTestDataHouse());
 //    private House house = new House();
 
@@ -20,7 +19,28 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
 
     @Override
     public void delete(Seller seller) {
-        sellerList.remove(seller);
+
+        System.out.println("In seller list");
+//        getSellerList().forEach(e -> System.out.println(e.toString()));
+        if (getSellerList().contains(seller)) {
+            sellerList.remove(seller);
+        } else {
+
+            for (int i = 0; i < sellerList.size(); i++) {
+                if (sellerList.get(i).getId().equalsIgnoreCase(seller.getId()) && sellerList.get(i).getLastName().equalsIgnoreCase(seller.getLastName()) &&
+                        sellerList.get(i).getFirstName().equalsIgnoreCase(seller.getFirstName()) && sellerList.get(i).getPatronymic().equalsIgnoreCase(seller.getPatronymic()) &&
+                        sellerList.get(i).getBrthDate().equalsIgnoreCase(seller.getBrthDate()) && sellerList.get(i).getObjId().equalsIgnoreCase(seller.getObjId()) &&
+                        sellerList.get(i).getPhone().equalsIgnoreCase(seller.getPhone())) {
+                    sellerList.remove(sellerList.get(i));
+//                    sellerList.remove(i);
+                    break;
+                }
+
+            }
+        }
+
+        System.out.println("after rem");
+        getSellerList().forEach(e -> System.out.println(e.toString()));
     }
 
     public ObservableList<Seller> getSellerList() {

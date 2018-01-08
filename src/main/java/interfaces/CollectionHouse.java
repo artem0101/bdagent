@@ -14,7 +14,22 @@ public class CollectionHouse implements MainObjectInterface<House> {
 
     @Override
     public void delete(House house) {
-        houseObservableList.remove(house);
+        getHouseObservableList().forEach(h -> System.out.println(h.toString()));
+
+        if (getHouseObservableList().contains(house)) {
+            houseObservableList.remove(house);
+        } else {
+            for (int i = 0; i < houseObservableList.size(); i++) {
+                if (houseObservableList.get(i).getId().equalsIgnoreCase(house.getId()) && houseObservableList.get(i).getDistinct().equalsIgnoreCase(house.getDistinct()) &&
+                        houseObservableList.get(i).getAddress().equalsIgnoreCase(house.getAddress()) && houseObservableList.get(i).getPrice().equalsIgnoreCase(house.getPrice()) &&
+                        houseObservableList.get(i).getFloors().equalsIgnoreCase(house.getFloors()) && houseObservableList.get(i).getRooms().equalsIgnoreCase(house.getRooms()) &&
+                        houseObservableList.get(i).getArea_ground().equalsIgnoreCase(house.getArea_ground()) && houseObservableList.get(i).getArea_house().equalsIgnoreCase(house.getArea_house())) {
+                    houseObservableList.remove(i);
+                }
+            }
+            System.out.println("in house " + houseObservableList.size());
+            houseObservableList.forEach(h -> System.out.println(h.toString()));
+        }
     }
 
     public ObservableList<House> getHouseObservableList() {

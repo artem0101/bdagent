@@ -25,6 +25,7 @@ import utils.DialogManager;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.AbstractList;
 
 public class SellerHouseController {
     private CollectionSeller collectionSellerHouse = new CollectionSeller();
@@ -42,6 +43,8 @@ public class SellerHouseController {
     private ObservableList<House> secondBackupListHouse;
     private static House selectedHouseSeller;
     private OnCreateStage creating = new OnCreateStage();
+    private static Seller variable;
+    private static int i;
 
 //    @FXML
 //    private CustomTextField tfSearchSeller;
@@ -262,6 +265,7 @@ public class SellerHouseController {
 //                System.out.println("\nHouse");
 //                backupListHouse.forEach(h -> System.out.println(h.toString()));
 //                System.out.println("****\n");
+                tableSeller.refresh();
                 tableSeller.setItems(secondBackupListSellerHouse);
                 break;
             case "btnEditSeller":
@@ -274,30 +278,75 @@ public class SellerHouseController {
                 System.out.println(selectedSeller);
                 break;
             case "btnDeleteSeller":
-                System.out.println("DELETE");
+//                System.out.println("DELETE");
                 if (!sellerIsSelected(selectedSeller)) return;
-                System.out.println(selectedSeller.toString());
-                System.out.println("DELETE 2");
-                collectionSellerHouse.delete(selectedSeller);
-                backupListSellerHouse.clear();
-                System.out.println(backupListSellerHouse.size());
-                backupListSellerHouse.addAll(collectionSellerHouse.getSellerList());
-                collectionHouse.delete(selectedHouseSeller);
-//                backupListSellerHouse.forEach(s -> {
-//                    if (backupListSellerHouse.contains(selectedSeller.get)) {
-//                        backupListSellerHouse.removeAll(s);
-//                        System.out.println("YY");
+
+//                System.out.println(selectedSeller.toString());
+//                System.out.println("DELETE 2");
+//                collectionSellerHouse.delete(selectedSeller);
+//                collectionSellerHouse.getSellerList().remove(selectedSeller);
+//                CollectionSeller backupCollectionSeller = new CollectionSeller();
+//                collectionSellerHouse.getSellerList().forEach(e -> {
+//                    Seller selectedSeller3;
+//                    if (e.getId().equalsIgnoreCase(selectedSeller.getId()) && e.getLastName().equalsIgnoreCase(selectedSeller.getLastName()) &&
+//                    e.getFirstName().equalsIgnoreCase(selectedSeller.getFirstName()) && e.getPatronymic().equalsIgnoreCase(selectedSeller.getPatronymic())) {
+//                        selectedSeller3 = new Seller(e.getId(), e.getLastName(), e.getFirstName(), e.getPatronymic(), e.getBrthDate(),e.getObjId(), e.getPhone());
+//                        System.out.println(e.toString());
+//                        i = indexOf(e);
+//                        collectionSellerHouse.delete(e);
 //                    }
 //                });
-                System.out.println("ba");
-                backupListSellerHouse.forEach(s -> System.out.println(s.toString()));
+
+
+
+//                System.out.println("\n----------------------\n");
+//                backupListSellerHouse.clear();
+//                System.out.println(backupListSellerHouse.size());
+//                backupListSellerHouse.addAll(collectionSellerHouse.getSellerList());
+//                backupListSellerHouse.removeAll(selectedSeller);
+//                collectionHouse.delete(selectedHouseSeller);
+////                backupListSellerHouse.forEach(s -> {
+////                    if (backupListSellerHouse.contains(selectedSeller.get)) {
+////                        backupListSellerHouse.removeAll(s);
+////                        System.out.println("YY");
+////                    }
+////                });
+//                System.out.println("ba");
+//                backupListSellerHouse.forEach(s -> System.out.println(s.toString()));
+//                secondBackupListSellerHouse.clear();
+//                backupListSellerHouse.forEach(s -> {
+//                    backupListHouse.forEach(h -> {
+//                        if (s.getObjId().equals(h.getId()))
+//                            secondBackupListSellerHouse.add(new Seller(s.getId(), s.getLastName(), s.getFirstName(), s.getPatronymic(), s.getBrthDate(), s.getObjId(), s.getPhone()));
+//                    });
+//                });
+//                System.out.println("second");
+//                secondBackupListSellerHouse.forEach(s -> System.out.println(s.toString()));
+////                System.out.println("\nHouse");
+////                backupListHouse.forEach(h -> System.out.println(h.toString()));
+////                System.out.println("****\n");
+//                tableSeller.setItems(secondBackupListSellerHouse);
+//                System.out.println("collectionSellerHouse");
+//                collectionSellerHouse.getSellerList().forEach(e -> System.out.println(e.toString()));
+//                System.out.println("backupListSellerHouse");
+//                backupListSellerHouse.forEach(e -> System.out.println(e.toString()));
+//                System.out.println("secondBackupListSellerHouse");
+//                secondBackupListSellerHouse.forEach(e -> System.out.println(e.toString()));
+                collectionSellerHouse.delete(selectedSeller);
+                backupListSellerHouse.clear();
+                backupListSellerHouse.addAll(collectionSellerHouse.getSellerList());
+                collectionHouse.delete(selectedHouseSeller);
                 secondBackupListSellerHouse.clear();
+//                System.out.println("__++____");
+//                backupListSellerHouse.forEach(e -> System.out.println(e.toString()));
                 backupListSellerHouse.forEach(s -> {
                     backupListHouse.forEach(h -> {
                         if (s.getObjId().equals(h.getId()))
                             secondBackupListSellerHouse.add(new Seller(s.getId(), s.getLastName(), s.getFirstName(), s.getPatronymic(), s.getBrthDate(), s.getObjId(), s.getPhone()));
                     });
                 });
+//                System.out.println("second");
+//                secondBackupListSellerHouse.forEach(s -> System.out.println(s.toString()));
 //                System.out.println("\nHouse");
 //                backupListHouse.forEach(h -> System.out.println(h.toString()));
 //                System.out.println("****\n");
