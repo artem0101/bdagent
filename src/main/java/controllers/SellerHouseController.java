@@ -110,7 +110,6 @@ public class SellerHouseController {
     @FXML
     private TableColumn<House, String> tbAreaHouse;
 
-
     @FXML
     private void initialize() {
 //        tableSeller.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -143,7 +142,7 @@ public class SellerHouseController {
         secondBackupListSellerHouse = FXCollections.observableArrayList();
         backupListSellerHouse.addAll(collectionSellerHouse.getSellerList());
         System.out.println("setItems");
-        tableSeller.setItems(collectionSellerHouse.fillTestDataSellerHouse());
+        tableSeller.setItems(collectionSellerHouse.fillTestDataSellerHouse()); // TODO  изменить источник
 
         collectionHouse.fillTestDataHouse();
         backupListHouse = FXCollections.observableArrayList();
@@ -202,7 +201,7 @@ public class SellerHouseController {
     }
 
     private void updateCountLabel() {
-        labelCountSeller.setText("Количество продавцов: " + collectionSellerHouse.fillTestDataSellerHouse().size());
+        labelCountSeller.setText("Количество покупателей: " + collectionSellerHouse.fillTestDataSellerHouse().size());
     }
 
     private void setupClearButtonField(CustomTextField customTextField) {

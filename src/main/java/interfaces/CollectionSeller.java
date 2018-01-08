@@ -2,6 +2,7 @@ package interfaces;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import objects.Apartment;
 import objects.House;
 import objects.Seller;
 
@@ -9,8 +10,10 @@ import objects.Seller;
 public class CollectionSeller implements MainObjectInterface<Seller> {
     private ObservableList<Seller> sellerList = FXCollections.observableArrayList();
     private ObservableList<Seller> sellerHouse = FXCollections.observableArrayList();
+    private ObservableList<Seller> sellerApartment = FXCollections.observableArrayList();
     private ObservableList<House> collectionHouse = FXCollections.observableArrayList(new CollectionHouse().fillTestDataHouse());
-//    private House house = new House();
+    private ObservableList<Apartment> collectionApartment = FXCollections.observableArrayList(new CollectionApartment().fillTestDataApartment());
+    //    private House house = new House();
 
     @Override
     public void add(Seller seller) {
@@ -81,9 +84,24 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
         return sellerHouse;
     }
 
+    public ObservableList<Seller> fillTestDataSellerApartment() {
+        sellerList.clear();
+        sellerApartment.clear();
+        if (sellerList.isEmpty()) fillTestDataSeller();
+        for (Seller seller : sellerList) {
+            for (Apartment apartment : collectionApartment) {
+                if (seller.getObjId().equals(apartment.getId()) && !sellerApartment.contains(seller)) {
+                    sellerApartment.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getPatronymic(), seller.getBrthDate(), seller.getObjId(), seller.getPhone()));
+                }
+            }
+        }
+        return sellerApartment;
+    }
+
     public ObservableList<Seller> getSellerHouse() {
         return sellerHouse;
     }
+
 
     public void print() {
         int number = 0;
