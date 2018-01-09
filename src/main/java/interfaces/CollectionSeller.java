@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import objects.Apartment;
 import objects.House;
+import objects.Placement;
 import objects.Seller;
 
 
@@ -11,8 +12,10 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
     private ObservableList<Seller> sellerList = FXCollections.observableArrayList();
     private ObservableList<Seller> sellerHouse = FXCollections.observableArrayList();
     private ObservableList<Seller> sellerApartment = FXCollections.observableArrayList();
+    private ObservableList<Seller> sellerPlacement = FXCollections.observableArrayList();
     private ObservableList<House> collectionHouse = FXCollections.observableArrayList(new CollectionHouse().fillTestDataHouse());
     private ObservableList<Apartment> collectionApartment = FXCollections.observableArrayList(new CollectionApartment().fillTestDataApartment());
+    private ObservableList<Placement> collectionPlacement = FXCollections.observableArrayList(new CollectionPlacement().fillTestDataPlacement());
     //    private House house = new House();
 
     @Override
@@ -96,6 +99,21 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
             }
         }
         return sellerApartment;
+    }
+
+    public ObservableList<Seller> fillTestDataSellerPlacement() {
+        sellerList.clear();
+        sellerPlacement.clear();
+        if (sellerList.isEmpty()) fillTestDataSeller();
+        for (Seller seller : sellerList) {
+            for (Placement placement : collectionPlacement) {
+                if (seller.getObjId().equalsIgnoreCase(placement.getId()) && !sellerList.contains(seller)) {
+                    sellerPlacement.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getPatronymic(), seller.getBrthDate(), seller.getObjId(), seller.getPhone()));
+                    return sellerPlacement;
+                }
+            }
+        }
+        return sellerPlacement;
     }
 
     public ObservableList<Seller> getSellerHouse() {
