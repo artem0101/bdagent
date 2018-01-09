@@ -63,7 +63,7 @@ public class SellerHouseDialogController {
         stage.close();
     }
 
-    public void  setSeller(Seller seller, House house) {
+    public void setSeller(Seller seller, House house) {
         if (seller == null || house == null) return;
         this.seller = seller;
         this.house = house;

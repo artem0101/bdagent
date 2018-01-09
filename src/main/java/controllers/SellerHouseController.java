@@ -187,7 +187,6 @@ public class SellerHouseController {
         } catch (NullPointerException exc) {
             System.out.println("Тут пусто");
         }
-
     }
 
     private void initLoader() {
