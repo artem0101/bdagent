@@ -2,10 +2,7 @@ package interfaces;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import objects.Apartment;
-import objects.House;
-import objects.Placement;
-import objects.Seller;
+import objects.*;
 
 
 public class CollectionSeller implements MainObjectInterface<Seller> {
@@ -13,9 +10,11 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
     private ObservableList<Seller> sellerHouse = FXCollections.observableArrayList();
     private ObservableList<Seller> sellerApartment = FXCollections.observableArrayList();
     private ObservableList<Seller> sellerPlacement = FXCollections.observableArrayList();
+    private ObservableList<Seller> sellerGround = FXCollections.observableArrayList();
     private ObservableList<House> collectionHouse = FXCollections.observableArrayList(new CollectionHouse().fillTestDataHouse());
     private ObservableList<Apartment> collectionApartment = FXCollections.observableArrayList(new CollectionApartment().fillTestDataApartment());
     private ObservableList<Placement> collectionPlacement = FXCollections.observableArrayList(new CollectionPlacement().fillTestDataPlacement());
+    private ObservableList<Ground> collectionGround = FXCollections.observableArrayList(new CollectionGround().fillTestDataGround());
     //    private House house = new House();
 
     @Override
@@ -114,6 +113,20 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
             }
         }
         return sellerPlacement;
+    }
+
+    public ObservableList<Seller> fillTestDataSellerGround() {
+        sellerList.clear();
+        sellerPlacement.clear();
+        if (sellerList.isEmpty()) fillTestDataSeller();
+        sellerList.forEach(seller -> {
+            collectionGround.forEach(ground -> {
+                if (seller.getObjId().equalsIgnoreCase(ground.getId()) && !sellerList.contains(seller)) {
+                    sellerGround.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getPatronymic(), seller.getBrthDate(), seller.getObjId(), seller.getPhone()));
+                }
+            });
+        });
+        return sellerGround;
     }
 
     public ObservableList<Seller> getSellerHouse() {

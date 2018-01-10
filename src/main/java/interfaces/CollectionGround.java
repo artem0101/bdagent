@@ -21,9 +21,10 @@ public class CollectionGround implements MainObjectInterface<Ground> {
         return groundObservableList;
     }
 
-    public void fillTestDataGround() {
+    public ObservableList<Ground> fillTestDataGround() {
         groundObservableList.add(new Ground("30001", "Октябрьский", "Компрессорная", "2300000", "300"));
         groundObservableList.add(new Ground("30002", "Железнодорожный", "Клары-Цеткин", "2100000", "400"));
+        return groundObservableList;
     }
 
     public Ground latest() {
