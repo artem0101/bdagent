@@ -9,6 +9,11 @@ public class CollectionApartment implements MainObjectInterface<Apartment> {
 
     @Override
     public void add(Apartment apartment) {
+        apartmentObservableList.add(apartment);
+    }
+
+    @Override
+    public void delete(Apartment apartment) {
         if (getApartmentObservableList().contains(apartment)) {
             apartmentObservableList.remove(apartment);
         } else {
@@ -21,11 +26,6 @@ public class CollectionApartment implements MainObjectInterface<Apartment> {
                 }
             }
         }
-    }
-
-    @Override
-    public void delete(Apartment apartment) {
-        apartmentObservableList.remove(apartment);
     }
 
     public ObservableList<Apartment> fillTestDataApartment() {

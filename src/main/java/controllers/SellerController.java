@@ -230,6 +230,7 @@ public class SellerController {
             optionsForNewWindow(actionEvent, "../sellerPlacement.fxml", "Продавцы");
         } else if (choiceObj.getValue().equals("Квартиры")) {
             optionsForNewWindow(actionEvent, "../sellerApartment.fxml", "Продавцы");
+//            optionsForNewWindow(actionEvent, "../sellerPlacement.fxml", "Продавцы");
         }
     }
 }

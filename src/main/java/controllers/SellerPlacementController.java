@@ -113,6 +113,10 @@ public class SellerPlacementController {
         tbAreaPlacement.setCellValueFactory(new PropertyValueFactory<>("Area"));
 
         collectionSellerPlacement.fillTestDataSellerPlacement();
+
+        System.out.println("Seller  placement: ");
+        collectionSellerPlacement.fillTestDataSellerPlacement().forEach(e -> System.out.println(e.toString()));
+
         backupListSellerPlacement = FXCollections.observableArrayList();
         secondBackupListSellerPlacement = FXCollections.observableArrayList();
         backupListSellerPlacement.addAll(collectionSellerPlacement.getSellerList());
@@ -301,7 +305,7 @@ public class SellerPlacementController {
     public void choiceCalc(ActionEvent actionEvent) {
         if (choiceObj.getValue().equals("Земельные участки")) {
             optionsForNewWindow(actionEvent, "../sellerGround.fxml", "Продавцы");
-        } else if (choiceObj.getValue().equals("Нежелые помещения")) {
+        } else if (choiceObj.getValue().equals("Дома")) {
             optionsForNewWindow(actionEvent, "../sellerHouse.fxml", "Продавцы");
         } else if (choiceObj.getValue().equals("Квартиры")) {
             optionsForNewWindow(actionEvent, "../sellerApartment.fxml", "Продавцы");

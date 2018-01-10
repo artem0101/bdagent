@@ -103,12 +103,21 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
     public ObservableList<Seller> fillTestDataSellerPlacement() {
         sellerList.clear();
         sellerPlacement.clear();
-        if (sellerList.isEmpty()) fillTestDataSeller();
+        if (sellerList.isEmpty()) {
+            System.out.println("не Пусто");
+            fillTestDataSeller();
+            sellerList.forEach(s -> System.out.println(s.toString()));
+            collectionPlacement.forEach(p -> System.out.println(p.toString()));
+            System.out.println("==========");
+        } else {
+            System.out.println("ПУСТО");
+            sellerPlacement.forEach(p -> System.out.println(p.toString()));
+        }
+        System.out.println("Sellerlist size " + sellerList.size() + "\nplacementlist size " + collectionPlacement.size());
         for (Seller seller : sellerList) {
             for (Placement placement : collectionPlacement) {
-                if (seller.getObjId().equalsIgnoreCase(placement.getId()) && !sellerList.contains(seller)) {
+                if (seller.getObjId().equalsIgnoreCase(placement.getId()) && !sellerPlacement.contains(seller)) {
                     sellerPlacement.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getPatronymic(), seller.getBrthDate(), seller.getObjId(), seller.getPhone()));
-                    return sellerPlacement;
                 }
             }
         }

@@ -40,11 +40,6 @@ public class SellerApartmentController {
     private static Apartment selectedApartment;
     private OnCreateStage creating = new OnCreateStage();
 
-    @FXML
-    private Button btn_employees_Seller;
-
-    @FXML
-    private Button btn_buyer_Seller;
 
     @FXML
     private TableView tableSeller;
@@ -122,7 +117,7 @@ public class SellerApartmentController {
         backupListSellerApartment = FXCollections.observableArrayList();
         secondBackupSellerListApartment = FXCollections.observableArrayList();
         backupListSellerApartment.addAll(collectionSellerApartment.getSellerList());
-        tableSeller.setItems(collectionSellerApartment.fillTestDataSellerHouse());
+        tableSeller.setItems(collectionSellerApartment.fillTestDataSellerApartment());
 
         collectionApartment.fillTestDataApartment();
         backupListApartment = FXCollections.observableArrayList();
@@ -147,13 +142,20 @@ public class SellerApartmentController {
                 } else if (event.getClickCount() == 1) {
                     collectionApartment.getApartmentObservableList().clear();
                     secondBackupListApartment.clear();
-                    Seller sellerApartent = (Seller) tableSeller.getSelectionModel().getSelectedItem();
-                    backupListApartment.forEach(backupApartment -> {
-                        if (sellerApartent.getObjId().equalsIgnoreCase(backupApartment.getId())) {
-                            secondBackupListApartment.add(backupApartment);
-                            tableApartment.setItems(secondBackupListApartment);
-                        }
-                    });
+                    if (tableApartment.getSelectionModel().getSelectedItems().isEmpty()) {
+                        tableApartment.getItems().clear();
+                        Seller sellerApartment = (Seller) tableSeller.getSelectionModel().getSelectedItem();
+                        backupListApartment.forEach(backupHouse -> {
+                            if (sellerApartment.getObjId().equalsIgnoreCase(backupHouse.getId())) {
+                                secondBackupListApartment.add(backupHouse);
+                                tableApartment.setItems(secondBackupListApartment);
+                            } else {
+                                System.out.println(sellerApartment.getObjId() + " != " + backupHouse.getId());
+                            }
+                        });
+                    } else {
+                        tableApartment.getSelectionModel().getSelectedItems().clear();
+                    }
                 }
             });
         } catch (NullPointerException exc) {
@@ -167,7 +169,7 @@ public class SellerApartmentController {
 
     private void initLoader() {
         try {
-            fxmlLoader.setLocation(getClass().getResource("../addSellerApartment"));
+            fxmlLoader.setLocation(getClass().getResource("../addSellerApartment.fxml"));
             fxmlEdit = fxmlLoader.load();
             sellerApartmentDialogController = fxmlLoader.getController();
         } catch (IOException e) {
