@@ -42,6 +42,8 @@ public class Transaction {
 
     public SimpleStringProperty idObjProperty() {
         return idObj;
+
+
     }
 
     public void setIdObj(String idObj) {
