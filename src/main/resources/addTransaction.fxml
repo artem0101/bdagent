@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="246.0" prefWidth="256.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TransactionDialogController" >
+   <children>
+      <Label layoutX="10.0" layoutY="14.0" text="id транзакции: " />
+      <Label layoutX="10.0" layoutY="42.0" text="Объект:" />
+      <Label layoutX="10.0" layoutY="70.0" text="Продавец: " />
+      <Label layoutX="10.0" layoutY="98.0" text="Покупатель: " />
+      <Label layoutX="10.0" layoutY="126.0" text="Сотрудник:" />
+      <Label layoutX="10.0" layoutY="154.0" text="Дата сделки: " />
+      <Label layoutX="10.0" layoutY="182.0" text="Сумма сделки:" />
+      <TextField fx:id="tfIdTransaction" layoutX="97.0" layoutY="10.0" />
+      <TextField fx:id="tfIdObj" layoutX="97.0" layoutY="38.0" />
+      <TextField fx:id="tfIdSeller" layoutX="97.0" layoutY="66.0" />
+      <TextField fx:id="tfIdBuyer" layoutX="97.0" layoutY="94.0" />
+      <TextField fx:id="tfIdEmployee" layoutX="97.0" layoutY="122.0" />
+      <TextField fx:id="tfDateTransaction" layoutX="97.0" layoutY="150.0" />
+      <TextField fx:id="tfAmountTransaction" layoutX="97.0" layoutY="178.0" />
+      <Button defaultButton="true" layoutX="95.0" layoutY="207.0" mnemonicParsing="false" text="Сохранить" prefWidth="74.0" />
+      <Button defaultButton="false" layoutX="173.0" layoutY="207.0" mnemonicParsing="false" text="Отменить" prefWidth="74.0" />
+   </children>
+</AnchorPane>

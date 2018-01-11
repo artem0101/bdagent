@@ -41,9 +41,8 @@ public class CollectionBuyer implements MainObjectInterface<Buyer> {
         buyerObservableList.add(new Buyer("7", "Мотрохов", "Сергей", "Анатольевич", "1976-11-30", "2342291"));
         buyerObservableList.add(new Buyer("8", "Курташкин", "Евгений", "Дмитриевич", "1990-06-20", "8928901"));
     }
+
     public Buyer lasted() {
         return buyerObservableList.get(buyerObservableList.size() - 1);
     }
-
-
 }

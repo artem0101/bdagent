@@ -220,8 +220,10 @@ public class SellerHouseController {
         Seller selectedSeller = (Seller) tableSeller.getSelectionModel().getSelectedItem();
         if (selectedSeller != null) {
             backupListHouse.forEach(house -> {
-                if (house.getId().equalsIgnoreCase(selectedSeller.getObjId()))
+                if (house.getId().equalsIgnoreCase(selectedSeller.getObjId())) {
+                    if (selectedHouseSeller != null) selectedHouseSeller = null;
                     selectedHouseSeller = house;
+                }
             });
         }
 
