@@ -132,14 +132,14 @@ public class SellerApartmentController {
         try {
             collectionSellerApartment.fillTestDataSellerApartment().addListener((ListChangeListener<Seller>) c -> updateCountLabel());
             tableSeller.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
+                if (event.getClickCount() == 2 && tableSeller.getSelectionModel().getSelectedItem() != null) {
                     Seller sellerApartment = (Seller) tableSeller.getSelectionModel().getSelectedItem();
                     backupListApartment.forEach(backupApartment -> {
                         if (backupApartment.getId().equalsIgnoreCase(sellerApartment.getObjId()))
                             sellerApartmentDialogController.setSeller(sellerApartment, backupApartment);
                     });
                     showDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                } else if (event.getClickCount() == 1) {
+                } else if (event.getClickCount() == 1 && tableSeller.getSelectionModel().getSelectedItem() != null) {
                     collectionApartment.getApartmentObservableList().clear();
                     secondBackupListApartment.clear();
                     if (tableApartment.getSelectionModel().getSelectedItems().isEmpty()) {
@@ -261,6 +261,9 @@ public class SellerApartmentController {
                     break;
                 case "btn_buyer_Seller":
                     optionsForNewWindow(actionEvent, "../buyers.fxml", "Покупатели");
+                    break;
+                case "btn_transaction_Seller":
+                    optionsForNewWindow(actionEvent, "../transaction.fxml", "Операции");
                     break;
             }
         }

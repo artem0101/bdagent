@@ -153,6 +153,9 @@ public class BuyerController {
             case "btnSellersFromBuyer":
                 optionsForNewWindow(actionEvent, "..//sellers.fxml", "Продавцы");
                 break;
+            case "btnTransaction":
+                optionsForNewWindow(actionEvent, "..//transaction.fxml", "Операции");
+                break;
         }
     }
 

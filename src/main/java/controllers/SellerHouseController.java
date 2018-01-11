@@ -160,14 +160,14 @@ public class SellerHouseController {
             collectionSellerHouse.fillTestDataSellerHouse().addListener((ListChangeListener<Seller>) c -> updateCountLabel());
 //        backupListHouse.addAll(collectionHouse.getHouseObservableList());
             tableSeller.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
+                if (event.getClickCount() == 2 && tableSeller.getSelectionModel().getSelectedItem() != null) {
                     Seller sellerHouse = (Seller) tableSeller.getSelectionModel().getSelectedItem();
                     backupListHouse.forEach(backupHouse -> {
                         if (backupHouse.getId().equalsIgnoreCase(sellerHouse.getObjId()))
                             sellerHouseDialogController.setSeller(sellerHouse, backupHouse);
                     });
                     showDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                } else if (event.getClickCount() == 1) {
+                } else if (event.getClickCount() == 1 && tableSeller.getSelectionModel().getSelectedItem() != null) {
                     collectionHouse.getHouseObservableList().clear();
                     secondBackupListHouse.clear();
                     if (tableHouse.getSelectionModel().getSelectedItems().isEmpty()) {
@@ -357,6 +357,9 @@ public class SellerHouseController {
                 break;
             case "btn_buyer_Seller":
                 optionsForNewWindow(actionEvent, "../buyers.fxml", "Покупатели");
+                break;
+            case "btn_transaction_Seller":
+                optionsForNewWindow(actionEvent, "../transaction.fxml", "Операции");
                 break;
         }
     }

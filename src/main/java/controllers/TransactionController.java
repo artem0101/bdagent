@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -118,6 +115,50 @@ public class TransactionController {
     }
 
     public void actionButtonPressed(ActionEvent actionEvent) {
+        Object source = actionEvent.getSource();
+        if (!(source instanceof Button)) return;
+        Button clickedButton = (Button) source;
+        Transaction selectedTransaction = (Transaction) tableTransaction.getSelectionModel().getSelectedItem();
+        transactionDialogController.setTransaction(selectedTransaction);
+
+        switch (clickedButton.getId()) {
+            case "btnAddTransaction":
+                editDialogStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                transactionDialogController.setTransaction(new Transaction());
+                showDialog(editDialogStage);
+                if (!transactionDialogController.getTransaction().getId().equals("") ||
+                        !transactionDialogController.getTransaction().getIdObj().equals("") ||
+                        !transactionDialogController.getTransaction().getSeller().equals("") ||
+                        !transactionDialogController.getTransaction().getBuyer().equals("") ||
+                        !transactionDialogController.getTransaction().getEmployee().equals("") ||
+                        !transactionDialogController.getTransaction().getDate().equals("") ||
+                        !transactionDialogController.getTransaction().getAmount().equals("")) {
+                    collectionTransaction.add(transactionDialogController.getTransaction());
+                    backupList.add(collectionTransaction.lasted());
+                }
+                break;
+            case "btnEditTransaction":
+                if (!(transactionIsSelected(selectedTransaction))) return;
+                editDialogStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                showDialog(editDialogStage);
+                transactionDialogController.setTransaction(selectedTransaction);
+                collectionTransaction.getTransactionObservableList().clear();
+                collectionTransaction.getTransactionObservableList().addAll(backupList);
+                break;
+            case "btnDelTransaction":
+                if (!(transactionIsSelected(selectedTransaction))) return;
+                collectionTransaction.delete(selectedTransaction);
+                break;
+            case "btnEmployees":
+                optionsForNewWindow(actionEvent, "..//employees.fxml", "Сотрудники");
+                break;
+            case "btnBuyers":
+                optionsForNewWindow(actionEvent, "..//buyers.fxml", "Продавцы");
+                break;
+            case "btnSellers":
+                optionsForNewWindow(actionEvent, "..//sellers.fxml", "Покупатели");
+                break;
+        }
 
     }
 

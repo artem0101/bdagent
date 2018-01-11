@@ -36,7 +36,8 @@ public class EmployeesController {
     private ModalityDialogWindow modalityDialogWindow = new ModalityDialogWindow();
 
     @FXML
-    private CustomTextField tfSearchEmployee;
+//    private CustomTextField tfSearchEmployee;
+    private TextField tfSearchEmployee;
 //    private TextField tfSearchEmployee;
 
     @FXML
@@ -77,7 +78,7 @@ public class EmployeesController {
         tableEmployee.setItems(collectionEmployee.getEmployeeObservableList());
 
         initLoader();
-        setupClearButtonField(tfSearchEmployee);
+//        setupClearButtonField(tfSearchEmployee);
     }
 
     private void initListener() {
@@ -154,6 +155,10 @@ public class EmployeesController {
                 break;
             case "btn_buyer_Empl":
                 optionsForNewWindow(actionEvent, "../buyers.fxml", "Покупатели");
+                break;
+            case "btn_transaction_Empl":
+                optionsForNewWindow(actionEvent, "../transaction.fxml", "Операции");
+                System.out.println("AAAAAAAAAAAA");
                 break;
         }
     }

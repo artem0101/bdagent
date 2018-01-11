@@ -136,7 +136,7 @@ public class SellerPlacementController {
             collectionSellerPlacement.fillTestDataSellerPlacement().addListener((ListChangeListener<Seller>) c -> updateCountLabel());
 
             tableSeller.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
+                if (event.getClickCount() == 2 && tableSeller.getSelectionModel().getSelectedItem() != null) {
                     Seller sellerPlacement = (Seller) tableSeller.getSelectionModel().getSelectedItem();
                     backupListPlacement.forEach(backupPlacement -> {
                         if (backupPlacement.getId().equalsIgnoreCase(sellerPlacement.getObjId())) {
@@ -144,7 +144,7 @@ public class SellerPlacementController {
                         }
                     });
                     showDialog((Stage) ((Node) event.getSource()).getScene().getWindow());
-                } else if (event.getClickCount() == 1) {
+                } else if (event.getClickCount() == 1 && tableSeller.getSelectionModel().getSelectedItem() != null) {
                     collectionPlacement.getPlacementObservableList().clear();
                     secondBackupListPlacement.clear();
                     if (ptablePlacement.getSelectionModel().getSelectedItems().isEmpty()) {
@@ -270,6 +270,9 @@ public class SellerPlacementController {
                 break;
             case "btn_buyer_Seller":
                 optionsForNewWindow(actionEvent, "../buyers.fxml", "Покупатели");
+                break;
+            case "btn_transaction_Seller":
+                optionsForNewWindow(actionEvent, "../transaction.fxml", "Операции");
                 break;
         }
     }

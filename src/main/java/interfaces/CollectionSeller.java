@@ -103,17 +103,7 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
     public ObservableList<Seller> fillTestDataSellerPlacement() {
         sellerList.clear();
         sellerPlacement.clear();
-        if (sellerList.isEmpty()) {
-            System.out.println("не Пусто");
-            fillTestDataSeller();
-            sellerList.forEach(s -> System.out.println(s.toString()));
-            collectionPlacement.forEach(p -> System.out.println(p.toString()));
-            System.out.println("==========");
-        } else {
-            System.out.println("ПУСТО");
-            sellerPlacement.forEach(p -> System.out.println(p.toString()));
-        }
-        System.out.println("Sellerlist size " + sellerList.size() + "\nplacementlist size " + collectionPlacement.size());
+        if (sellerList.isEmpty()) fillTestDataSeller();
         for (Seller seller : sellerList) {
             for (Placement placement : collectionPlacement) {
                 if (seller.getObjId().equalsIgnoreCase(placement.getId()) && !sellerPlacement.contains(seller)) {
@@ -126,15 +116,15 @@ public class CollectionSeller implements MainObjectInterface<Seller> {
 
     public ObservableList<Seller> fillTestDataSellerGround() {
         sellerList.clear();
-        sellerPlacement.clear();
+        sellerGround.clear();
         if (sellerList.isEmpty()) fillTestDataSeller();
-        sellerList.forEach(seller -> {
-            collectionGround.forEach(ground -> {
-                if (seller.getObjId().equalsIgnoreCase(ground.getId()) && !sellerList.contains(seller)) {
+        for (Seller seller : sellerList) {
+            for (Ground ground : collectionGround) {
+                if (seller.getObjId().equalsIgnoreCase(ground.getId()) && !sellerGround.contains(seller)) {
                     sellerGround.add(new Seller(seller.getId(), seller.getLastName(), seller.getFirstName(), seller.getPatronymic(), seller.getBrthDate(), seller.getObjId(), seller.getPhone()));
                 }
-            });
-        });
+            }
+        }
         return sellerGround;
     }
 

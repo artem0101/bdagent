@@ -176,6 +176,9 @@ public class SellerController {
             case "btn_buyer_Seller":
                 optionsForNewWindow(actionEvent, "../buyers.fxml", "Покупатели");
                 break;
+            case "btn_transaction_Seller":
+                optionsForNewWindow(actionEvent, "../transaction.fxml", "Операции");
+                break;
         }
     }
 
