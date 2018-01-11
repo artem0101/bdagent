@@ -14,7 +14,7 @@
 
 <!--<?import org.controlsfx.control.textfield.CustomTextField?>-->
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SellerGroundController">
     <fx:define>
         <String fx:id="homeValue" fx:value="home.fxml" />
         <String fx:id="apartmentValue" fx:value="apartment.fxml" />
@@ -25,8 +25,8 @@
     <left>
         <AnchorPane maxWidth="-Infinity" prefHeight="400.0" prefWidth="150.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btn_employees_Seller" layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Сотрудники" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-                <Button fx:id="btn_buyer_Seller" layoutX="14.0" layoutY="39.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Покупатели" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="39.0" />
+                <Button fx:id="btn_employees_Seller" layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Сотрудники" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" onAction="#actionButtonPressed" />
+                <Button fx:id="btn_buyer_Seller" layoutX="14.0" layoutY="39.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Покупатели" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="39.0" onAction="#actionButtonPressed" />
                 <Button fx:id="btn_seller_Seller" layoutX="14.0" layoutY="64.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Продавцы" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="64.0" />
                 <Button layoutX="14.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Сделки" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="89.0" />
                 <Button fx:id="btn_correction_Seller" layoutX="14.0" layoutY="156.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Коррекция" AnchorPane.topAnchor="89.0" />
@@ -43,10 +43,10 @@
                 <Label layoutX="51.0" layoutY="22.0" text="Поиск продавца" />
                 <TextField fx:id="tfSearchSeller" layoutX="26.0" layoutY="49.0" />
                 <Button fx:id="btn_search_seller_Seller" layoutX="75.0" layoutY="84.0" mnemonicParsing="false" text="Поиск" />
-                <Button fx:id="btnDeleteSeller" layoutX="64.0" layoutY="461.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Удалить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="66.0" />
-                <Button fx:id="btnEditSeller" layoutX="64.0" layoutY="429.0" mnemonicParsing="false" text="Изменить" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="66.0" />
-                <Button fx:id="btnAddSeller" layoutX="62.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="64.0" />
-                <ChoiceBox fx:id="choiceObj" layoutX="24.0" layoutY="121.0" prefWidth="150.0" value="Земельные участки">
+                <Button fx:id="btnDeleteSeller" layoutX="64.0" layoutY="461.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Удалить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="66.0" onAction="#actionButtonPressed" />
+                <Button fx:id="btnEditSeller" layoutX="64.0" layoutY="429.0" mnemonicParsing="false" text="Изменить" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="66.0" onAction="#actionButtonPressed" />
+                <Button fx:id="btnAddSeller" layoutX="62.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="64.0" onAction="#actionButtonPressed" />
+                <ChoiceBox fx:id="choiceObj" layoutX="24.0" layoutY="121.0" prefWidth="150.0" value="Земельные участки" onAction="#choiceCalc" >
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Дома" />

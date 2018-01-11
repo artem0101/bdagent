@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import objects.Ground;
 import objects.Seller;
+import utils.DialogManager;
 
 public class SellerGroundDialogController {
 
@@ -76,8 +77,29 @@ public class SellerGroundDialogController {
                 tfIdObjectGround.getText().equalsIgnoreCase("") || tfDistinctGround.getText().equalsIgnoreCase("") ||
                 tfAddressGround.getText().equalsIgnoreCase("") || tfPriceGround.getText().equalsIgnoreCase("") ||
                 tfAreaGround.getText().equalsIgnoreCase("")) {
-
+            DialogManager.showInfoDialog("Ошибка", "Введены не все данные");
+        } else {
+            seller.setId(tfIdSellerGround.getText());
+            seller.setLastName(tfLastNameSellerGround.getText());
+            seller.setFirstName(tfFirstNameSellerGround.getText());
+            seller.setPatronymic(tfPatronimycSellerGround.getText());
+            seller.setBrthDate(tfBirthdaySellerGround.getText());
+            seller.setPhone(tfPhoneSellerGround.getText());
+            seller.setObjId(tfIdObjectGround.getText());
+            ground.setId(tfIdObjectGround.getText());
+            ground.setDistinct(tfDistinctGround.getText());
+            ground.setAddress(tfAddressGround.getText());
+            ground.setPrice(tfPriceGround.getText());
+            ground.setArea(tfAreaGround.getText());
+            actionClose(actionEvent);
         }
     }
 
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public Ground getGround() {
+        return ground;
+    }
 }
