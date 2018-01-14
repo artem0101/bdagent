@@ -134,7 +134,7 @@ public class TransactionDialogController {
                         });
                         grounds.forEach(g -> {
                             if (tfIdObj.getText().equals(g.getId())) {
-                                amount = g.getPrice()
+//                                amount = g.getPrice()
                             }
                         });
                     }
