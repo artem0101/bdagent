@@ -1,16 +1,40 @@
 package controllers;
 
+import interfaces.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import objects.Transaction;
+import objects.*;
 import utils.DialogManager;
 
 
 public class TransactionDialogController {
     private Transaction transaction;
+    private ObservableList<Seller> sellers = FXCollections.observableArrayList();
+    private ObservableList<Apartment> apartments = FXCollections.observableArrayList();
+    private ObservableList<Ground> grounds = FXCollections.observableArrayList();
+    private ObservableList<House> houses = FXCollections.observableArrayList();
+    private ObservableList<Placement> placements = FXCollections.observableArrayList();
+    private ObservableList<Buyer> buyers = FXCollections.observableArrayList();
+    private ObservableList<Employee> employees = FXCollections.observableArrayList();
+
+    private CollectionSeller collectionSeller = new CollectionSeller();
+    private CollectionApartment collectionApartment = new CollectionApartment();
+    private CollectionGround collectionGround = new CollectionGround();
+    private CollectionHouse collectionHouse = new CollectionHouse();
+    private CollectionPlacement collectionPlacement = new CollectionPlacement();
+    private CollectionBuyer collectionBuyer = new CollectionBuyer();
+    private CollectionEmployee collectionEmployee = new CollectionEmployee();
+
+    private static String objId;
+    private static String seller;
+    private static String buyer;
+    private static String employee;
+    private static String amount;
 
     @FXML
     private TextField tfIdTransaction;
@@ -52,6 +76,27 @@ public class TransactionDialogController {
     }
 
     public void actionSave(ActionEvent actionEvent) {
+        sellers.addAll(collectionSeller.getSellerList());
+        apartments.addAll(collectionApartment.getApartmentObservableList());
+        grounds.addAll(collectionGround.getGroundObservableList());
+        houses.addAll(collectionHouse.getHouseObservableList());
+        placements.addAll(collectionPlacement.getPlacementObservableList());
+        buyers.addAll(collectionBuyer.getBuyerObservableList());
+        employees.addAll(collectionEmployee.getEmployeeObservableList());
+
+//        sellers.forEach(s -> {
+//            if (tfIdObj.getText().equals(s.getObjId()) && tfIdSeller.getText().equals(s.getId())) {
+//                employees.forEach(e -> {
+//                    if (tfIdEmployee.getText().equals(e.getId())) {
+//                        buyers.forEach(b -> {
+//                            if (tfIdBuyer.getText().equals(b.getId())) {
+//
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        });
         if (tfIdTransaction.getText().equalsIgnoreCase("") || tfIdObj.getText().equalsIgnoreCase("") ||
                 tfIdSeller.getText().equalsIgnoreCase("") || tfIdBuyer.getText().equalsIgnoreCase("") ||
                 tfIdEmployee.getText().equalsIgnoreCase("") || tfDateTransaction.getText().equalsIgnoreCase("") ||
@@ -71,5 +116,38 @@ public class TransactionDialogController {
 
     public Transaction getTransaction() {
         return transaction;
+    }
+
+    public void afterSelectedObjid(ActionEvent actionEvent) {
+        Object source = actionEvent.getSource();
+        TextField textField = (TextField) source;
+
+        switch (textField.getId()) {
+            case "tfIdObj":
+                sellers.forEach(s -> {
+                    if (tfIdObj.getText().equals(s.getObjId())) {
+                        seller = s.getId();
+                        apartments.forEach(a -> {
+                            if (tfIdObj.getText().equals(a)) {
+                                amount = a.getPrice();
+                            }
+                        });
+                        grounds.forEach(g -> {
+                            if (tfIdObj.getText().equals(g.getId())) {
+                                amount = g.getPrice()
+                            }
+                        });
+                    }
+                });
+                break;
+            case "tfIdSeller":
+                sellers.forEach(s -> {
+                    if (tfIdSeller.getText().equals(s.getId())) {
+                        objId = s.getObjId();
+
+                    }
+                });
+
+        }
     }
 }

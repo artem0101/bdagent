@@ -2,7 +2,7 @@ package interfaces;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import objects.Transaction;
+import objects.*;
 
 public class CollectionTransaction implements MainObjectInterface<Transaction> {
     private ObservableList<Transaction> transactionObservableList = FXCollections.observableArrayList();
@@ -22,7 +22,7 @@ public class CollectionTransaction implements MainObjectInterface<Transaction> {
     }
 
     public void fillTestDataTransaction() {
-
+        transactionObservableList.add(new Transaction("1", "2001", "1", "4", "3", "2014-03-05", ""));
     }
 
     public Transaction lasted() { return transactionObservableList.get(transactionObservableList.size() - 1); }
