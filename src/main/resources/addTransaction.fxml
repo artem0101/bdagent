@@ -17,10 +17,10 @@
       <Label layoutX="10.0" layoutY="154.0" text="Дата сделки: " />
       <Label layoutX="10.0" layoutY="182.0" text="Сумма сделки:" />
       <TextField fx:id="tfIdTransaction" layoutX="97.0" layoutY="10.0" />
-      <TextField fx:id="tfIdObj" layoutX="97.0" layoutY="38.0" />
-      <TextField fx:id="tfIdSeller" layoutX="97.0" layoutY="66.0" />
-      <TextField fx:id="tfIdBuyer" layoutX="97.0" layoutY="94.0" />
-      <TextField fx:id="tfIdEmployee" layoutX="97.0" layoutY="122.0" />
+      <TextField fx:id="tfIdObj" layoutX="97.0" layoutY="38.0" onAction="#afterSelectedObjid" />
+      <TextField fx:id="tfIdSeller" layoutX="97.0" layoutY="66.0" onAction="#afterSelectedObjid" />
+      <TextField fx:id="tfIdBuyer" layoutX="97.0" layoutY="94.0" onAction="#afterSelectedObjid" />
+      <TextField fx:id="tfIdEmployee" layoutX="97.0" layoutY="122.0" onAction="#afterSelectedObjid" />
       <TextField fx:id="tfDateTransaction" layoutX="97.0" layoutY="150.0" />
       <TextField fx:id="tfAmountTransaction" layoutX="97.0" layoutY="178.0" />
       <Button defaultButton="true" layoutX="95.0" layoutY="207.0" mnemonicParsing="false" text="Сохранить" prefWidth="74.0" />

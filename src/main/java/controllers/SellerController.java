@@ -1,6 +1,6 @@
 package controllers;
 
-import interfaces.CollectionSeller;
+import interfaces.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -16,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import objects.Seller;
+import objects.*;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.controlsfx.control.textfield.TextFields;
 import utils.DialogManager;
@@ -35,10 +35,24 @@ public class SellerController {
     private ObservableList<Seller> backupList;
     private OnCreateStage creating = new OnCreateStage();
 
+    private ObservableList<Apartment> apartments = FXCollections.observableArrayList();
+    private ObservableList<Ground> grounds = FXCollections.observableArrayList();
+    private ObservableList<House> houses = FXCollections.observableArrayList();
+    private ObservableList<Placement> placements = FXCollections.observableArrayList();
+    private ObservableList<Buyer> buyers = FXCollections.observableArrayList();
+    private ObservableList<Employee> employees = FXCollections.observableArrayList();
 
-//    @FXML
+    private CollectionApartment collectionApartment = new CollectionApartment();
+    private CollectionGround collectionGround = new CollectionGround();
+    private CollectionHouse collectionHouse = new CollectionHouse();
+    private CollectionPlacement collectionPlacement = new CollectionPlacement();
+    private CollectionBuyer collectionBuyer = new CollectionBuyer();
+    private CollectionEmployee collectionEmployee = new CollectionEmployee();
+
+
+    @FXML
 //    private CustomTextField tfSearchSeller;
-//    private TextField tfSearchSeller;
+    private TextField tfSearchSeller;
 
     @FXML
     private Button btn_employees_Seller;
@@ -201,19 +215,19 @@ public class SellerController {
         newEditDialogStage.showAndWait();
     }
 
-//    public void actionSearch(ActionEvent actionEvent) {
-//        collectionSeller.getSellerList().clear();
-//        for (Seller seller : backupList) {
-//            if (seller.getId().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
-//                    seller.getLastName().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
-//                    seller.getFirstName().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
-//                    seller.getPatronymic().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
-//                    seller.getBrthDate().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
-//                    seller.getObjId().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
-//                    seller.getPhone().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()))
-//                collectionSeller.getSellerList().add(seller);
-//        }
-//    }
+    public void actionSearch(ActionEvent actionEvent) {
+        collectionSeller.getSellerList().clear();
+        for (Seller seller : backupList) {
+            if (seller.getId().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
+                    seller.getLastName().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
+                    seller.getFirstName().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
+                    seller.getPatronymic().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
+                    seller.getBrthDate().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
+                    seller.getObjId().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()) ||
+                    seller.getPhone().toLowerCase().contains(tfSearchSeller.getText().toLowerCase()))
+                collectionSeller.getSellerList().add(seller);
+        }
+    }
 
     private void optionsForNewWindow(ActionEvent actionEvent, String fxmlLocation, String title) {
         Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

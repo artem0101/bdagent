@@ -126,28 +126,93 @@ public class TransactionDialogController {
             case "tfIdObj":
                 sellers.forEach(s -> {
                     if (tfIdObj.getText().equals(s.getObjId())) {
-                        seller = s.getId();
+//                        seller = s.getId();
+                        tfIdSeller.setText(s.getId());
                         apartments.forEach(a -> {
                             if (tfIdObj.getText().equals(a)) {
-                                amount = a.getPrice();
+//                                amount = a.getPrice();
+                                tfAmountTransaction.setText(a.getPrice());
                             }
                         });
                         grounds.forEach(g -> {
                             if (tfIdObj.getText().equals(g.getId())) {
-//                                amount = g.getPrice()
+//                                amount = g.getPrice();
+                                tfAmountTransaction.setText(g.getPrice());
                             }
                         });
+                        houses.forEach(h -> {
+                            if (tfIdObj.getText().equals(h.getId())) {
+//                                amount = h.getPrice();
+                                tfAmountTransaction.setText(h.getPrice());
+                            }
+                        });
+                        placements.forEach(p -> {
+                            if (tfIdObj.getText().equals(p.getId())) {
+//                                amount = p.getPrice();
+                                tfAmountTransaction.setText(p.getPrice());
+                            }
+                        });
+                    } else {
+                        DialogManager.showInfoDialog("Ошибка", "Объекта с таким id не существует");
+                        tfIdObj.clear();
                     }
                 });
                 break;
             case "tfIdSeller":
                 sellers.forEach(s -> {
                     if (tfIdSeller.getText().equals(s.getId())) {
-                        objId = s.getObjId();
-
+//                        objId = s.getObjId();
+                        tfIdObj.setText(s.getObjId());
+                        apartments.forEach(a -> {
+                            if (tfIdObj.getText().equals(a)) {
+//                                amount = a.getPrice();
+                                tfAmountTransaction.setText(a.getPrice());
+                            }
+                        });
+                        grounds.forEach(g -> {
+                            if (tfIdObj.getText().equals(g.getId())) {
+//                                amount = g.getPrice();
+                                tfAmountTransaction.setText(g.getPrice());
+                            }
+                        });
+                        houses.forEach(h -> {
+                            if (tfIdObj.getText().equals(h.getId())) {
+//                                amount = h.getPrice();
+                                tfAmountTransaction.setText(h.getPrice());
+                            }
+                        });
+                        placements.forEach(p -> {
+                            if (tfIdObj.getText().equals(p.getId())) {
+//                                amount = p.getPrice();
+                                tfAmountTransaction.setText(p.getPrice());
+                            }
+                        });
+                    } else {
+                        DialogManager.showInfoDialog("Ошибка", "Продавца с таким id не существует");
+                        tfIdSeller.clear();
                     }
                 });
-
+                break;
+            case "tfIdBuyer":
+                buyers.forEach(b -> {
+                    if (tfIdBuyer.getText().equals(b.getId())) {
+                        buyer = tfIdBuyer.getText();
+                    } else {
+                        DialogManager.showInfoDialog("Ошибка", "Покупателя с таким id не существует");
+                        tfIdBuyer.clear();
+                    }
+                });
+                break;
+            case "tfIdEmployee":
+                employees.forEach(e -> {
+                    if (tfIdEmployee.getText().equals(e.getId())) {
+                        employee = e.getId();
+                    } else {
+                        DialogManager.showInfoDialog("Ошибка", "Покупателя с таким id не существует");
+                        tfIdEmployee.clear();
+                    }
+                });
+                break;
         }
     }
 }
