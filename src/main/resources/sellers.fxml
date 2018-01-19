@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-
 <!--<?import org.controlsfx.control.textfield.CustomTextField?>-->
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SellerController">
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SellerController">
     <left>
         <AnchorPane maxWidth="-Infinity" prefHeight="400.0" prefWidth="150.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="btn_employees_Seller" layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="122.0" text="Сотрудники" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-                <Button fx:id="btn_buyer_Seller" layoutX="14.0" layoutY="39.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" onAction="#actionButtonPressed" prefWidth="122.0" text="Покупатели" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="39.0" />
-                <Button fx:id="btn_seller_Seller" layoutX="14.0" layoutY="64.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Продавцы" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="64.0" />
-                <Button layoutX="14.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Сделки" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="89.0" />
-                <Button fx:id="btn_correction_Seller" layoutX="14.0" layoutY="156.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Коррекция" AnchorPane.topAnchor="89.0" />
-                <Button fx:id="btn_report_Seller" layoutX="14.0" layoutY="181.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Отчёт" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="181.0" />
-                <Button fx:id="btn_search_Seller" layoutX="14.0" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Поиск клиента" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="206.0" />
-                <Button fx:id="btn_transaction_Seller" layoutX="14.0" layoutY="114.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Операции" onAction="#actionButtonPressed" />
-            <Label fx:id="labelCountSeller" layoutX="61.0" layoutY="456.0" />
+                <Button fx:id="btn_buyer_Seller" layoutX="14.0" layoutY="39.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="122.0" text="Покупатели" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="46.0" />
+                <Button fx:id="btn_seller_Seller" layoutX="14.0" layoutY="64.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Продавцы" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="80.0" />
+                <Button fx:id="btn_transaction_Seller" layoutX="14.0" layoutY="114.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="122.0" text="Операции" AnchorPane.topAnchor="113.0" />
+            <Label fx:id="labelCountSeller" layoutX="5.0" layoutY="453.0" prefHeight="16.0" prefWidth="141.0" />
             </children>
         </AnchorPane>
     </left>
@@ -36,10 +24,10 @@
                 <Label layoutX="51.0" layoutY="23.0" text="Поиск продавца" />
                 <TextField fx:id="tfSearchSeller" layoutX="22.0" layoutY="50.0" />
                 <Button fx:id="btn_search_seller_Seller" layoutX="71.0" layoutY="82.0" mnemonicParsing="false" text="Поиск" />
-            <Button fx:id="btnDeleteSeller" layoutX="65.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="70.0" text="Удалить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" />
+            <Button fx:id="btnDeleteSeller" disable="true" layoutX="65.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="70.0" text="Удалить" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" />
             <Button fx:id="btnEditSeller" layoutX="65.0" layoutY="429.0" mnemonicParsing="false" onAction="#actionButtonPressed" text="Изменить" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="65.0" />
-            <Button fx:id="btnAddSeller"  layoutX="63.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="63.0" />
-            <ChoiceBox fx:id="choiceObj" layoutX="22.0" layoutY="120.0" onAction="#choiceCalc" prefWidth="150.0" value=" " onContextMenuRequested="#choiceCalc">
+            <Button fx:id="btnAddSeller" layoutX="63.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionButtonPressed" prefHeight="25.0" prefWidth="74.0" text="Добавить" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="63.0" />
+            <ChoiceBox fx:id="choiceObj" layoutX="22.0" layoutY="120.0" onAction="#choiceCalc" onContextMenuRequested="#choiceCalc" prefWidth="150.0" value=" ">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Дома" />
@@ -53,7 +41,7 @@
         </AnchorPane>
     </right>
    <center>
-      <SplitPane dividerPositions="0.7128514056224899" minHeight="300.0" orientation="VERTICAL" BorderPane.alignment="CENTER">
+      <SplitPane minHeight="300.0" orientation="VERTICAL" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minWidth="0.0" prefHeight="257.0" prefWidth="672.0">
                <children>
@@ -73,10 +61,6 @@
                   </TableView>
                </children>
             </AnchorPane>
-          <AnchorPane fx:id="splitpane_Seller" maxHeight="-Infinity" minHeight="100.0" prefHeight="140.0">
-               <children>
-
-               </children></AnchorPane>
         </items>
       </SplitPane>
    </center>

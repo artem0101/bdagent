@@ -63,7 +63,7 @@ public class TransactionController {
     @FXML
     private void initialize() {
         tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableObj.setCellValueFactory(new PropertyValueFactory<>("Object"));
+        tableObj.setCellValueFactory(new PropertyValueFactory<>("Seller"));
         tableSeller.setCellValueFactory(new PropertyValueFactory<>("Seller"));
         tableBuyer.setCellValueFactory(new PropertyValueFactory<>("Buyer"));
         tableEmpoloyeer.setCellValueFactory(new PropertyValueFactory<>("Employee"));
