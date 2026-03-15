@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="init-createSchema-realty_agency" author="username" dbms="postgresql">
+        <sql endDelimiter=";">
+            CREATE SCHEMA IF NOT EXISTS realtor_agency;
+        </sql>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realty_agency.subjects" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="subjects" remarks="Таблица объектов">
+            <column name="id" type="BIGINT" remarks="Идентификатор объекта">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="country" type="TEXT" remarks="Страна">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="TEXT" remarks="Город">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="VARCHAR(20)" remarks="Почтовый индекс"/>
+            <column name="street" type="TEXT" remarks="Улица">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="TEXT" remarks="Номер">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="NUMERIC(10,2)" remarks="Цена">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_available" type="BOOLEAN" remarks="Доступен для продажи" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realty_agency.subject_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="subject_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realty_agency.apartments" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="apartments" remarks="Квартиры">
+            <column name="id" type="BIGINT" remarks="Идентификатор квартиры">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="subject_id" type="BIGINT" remarks="Объект">
+                <constraints nullable="false"/>
+            </column>
+            <column name="floor" type="INT" remarks="Этаж">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rooms" type="INT" remarks="Количество квартир">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area" type="NUMERIC(10,2)" remarks="Площадь">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_apartments_subjects" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="apartments"
+                baseColumnNames="subject_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="subjects"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_apartments_subjects"/>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.apartments_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="apartments_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.houses" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="houses" remarks="Частные дома">
+            <column name="id" type="BIGINT" remarks="Идентификатор дома">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="subject_id" type="BIGINT" remarks="Объект">
+                <constraints nullable="false"/>
+            </column>
+            <column name="floors" type="INT" remarks="Количество этажей">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rooms" type="INT" remarks="Количество комнат">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area_ground" type="NUMERIC(10,2)" remarks="Площадь земельного участка">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area_house" type="NUMERIC(10,2)" remarks="Площадь дома">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_houses_subjects" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="houses"
+                baseColumnNames="subject_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="subjects"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_houses_subjects"/>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.houses_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="houses_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.grounds" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="grounds" remarks="Земельные участки">
+            <column name="id" type="BIGINT" remarks="Идентификатор земельного участка">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="subject_id" type="BIGINT" remarks="Объект">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area" type="NUMERIC(10,2)" remarks="Площадь">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_grounds_subjects" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="grounds"
+                baseColumnNames="subject_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="subjects"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_grounds_subjects"/>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.grounds_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="grounds_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.placements" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="placements" remarks="Помещения">
+            <column name="id" type="BIGINT" remarks="Идентификатор помещенимя">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="subject_id" type="BIGINT" remarks="Объект">
+                <constraints nullable="false"/>
+            </column>
+            <column name="floors" type="INT" remarks="Количество этажей">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rooms" type="INT" remarks="Количество комнат">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area" type="NUMERIC(10,2)" remarks="Площадь">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_placements_subjects" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="placements"
+                baseColumnNames="subject_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="subjects"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_placements_subjects"/>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.placements_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="placements_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.clients" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="clients" remarks="Клиенты">
+            <column name="id" type="BIGINT" remarks="Идентификатор клиента">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="surname" type="TEXT" remarks="Фамилия">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="TEXT" remarks="Имя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patronymic" type="TEXT" remarks="Отчество">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="BIGINT" remarks="Номер телефона">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birthday" type="TIMESTAMP" remarks="Дата рождения">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="TEXT" remarks="Тип клиента">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.clients_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="clients_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.client_to_subject" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="client_to_subject" remarks="Связь клиента с объектом">
+            <column name="client_id" type="BIGINT" remarks="Клиент">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_id" type="BIGINT" remarks="Объект">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_subject_owner" type="BOOLEAN" remarks="Является клиент владельцем">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-addPrimaryKey-realtor_agency.pk_client_to_subject" author="username" dbms="postgresql">
+        <addPrimaryKey
+                schemaName="realtor_agency"
+                tableName="client_to_subject"
+                columnNames="client_id, subject_id"
+                constraintName="pk_client_to_subject"/>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_client_to_subject_clients" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="client_to_subject"
+                baseColumnNames="client_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="clients"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_client_to_subject_clients"/>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_client_to_subject_subjects" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="client_to_subject"
+                baseColumnNames="subject_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="subjects"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_client_to_subject_subjects"/>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.sellers_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="sellers_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.buyers" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="buyers" remarks="Покупатель">
+            <column name="id" type="BIGINT" remarks="Идентификатор покупателя">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="client_id" type="BIGINT" remarks="Клиент">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_buyers_clients" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="buyers"
+                baseColumnNames="client_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="clients"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                constraintName="fk_buyers_clients"/>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.buyers_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="buyers_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.employees" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="employees" remarks="Сотрудники">
+            <column name="id" type="BIGINT" remarks="Идентификатор сотрудника">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="surname" type="TEXT" remarks="Фамилия">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="TEXT" remarks="Имя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patronymic" type="TEXT" remarks="Отчество">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post" type="TEXT" remarks="Должность">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.employees_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="employees_id_seq" startValue="2000"/>
+    </changeSet>
+
+    <changeSet id="initial-createTable-realtor_agency.transactions" author="username" dbms="postgresql">
+        <createTable schemaName="realtor_agency" tableName="transactions" remarks="Транзакции">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="subject_id" type="BIGINT" remarks="Объект">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seller_id" type="BIGINT" remarks="Продавец">
+                <constraints nullable="false"/>
+            </column>
+            <column name="buyer_id" type="BIGINT" remarks="Покупатель">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employee_id" type="BIGINT" remarks="Сотрудник">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_date" type="TIMESTAMP" remarks="Дата транзакции"/>
+            <column name="amount" type="NUMERIC(10,2)" remarks="Сумма транзакции" defaultValue="0.00">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="TEXT" remarks="Статус транзакции" defaultValue="Создана">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_transactions_subjects" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="transactions"
+                baseColumnNames="subject_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="subjects"
+                referencedColumnNames="id"
+                constraintName="fk_transactions_subjects"/>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_transactions_sellers" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="transactions"
+                baseColumnNames="seller_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="clients"
+                referencedColumnNames="id"
+                constraintName="fk_transactions_sellers"/>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_transactions_buyers" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="transactions"
+                baseColumnNames="buyer_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="clients"
+                referencedColumnNames="id"
+                constraintName="fk_transactions_buyers"/>
+    </changeSet>
+
+    <changeSet id="initial-addForeignKeyConstraint-realtor_agency.fk_transactions_employees" author="username" dbms="postgresql">
+        <addForeignKeyConstraint
+                baseTableSchemaName="realtor_agency"
+                baseTableName="transactions"
+                baseColumnNames="employee_id"
+                referencedTableSchemaName="realtor_agency"
+                referencedTableName="employees"
+                referencedColumnNames="id"
+                constraintName="fk_transactions_employees"/>
+    </changeSet>
+
+    <changeSet id="initial-createSequence-realtor_agency.transactions_id_seq" author="username" dbms="postgresql">
+        <createSequence schemaName="realtor_agency" sequenceName="transactions_id_seq" startValue="2000"/>
+    </changeSet>
+
+</databaseChangeLog>
