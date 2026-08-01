@@ -218,7 +218,7 @@ public final class Mapper {
                 .build();
     }
 
-    public SubjectEntity toSubjectEntity(PlacementDto dto) {
+    public SubjectEntity toSubjectEntity(SubjectDto dto) {
         return SubjectEntity.builder()
                 .id(dto.getSubjectId())
                 .country(dto.getCountry())

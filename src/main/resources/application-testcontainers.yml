@@ -7,6 +7,11 @@ spring:
     username: username
     password: password
 
+  sql:
+    init:
+      mode: always
+      schema-location: classpath:schema.sql
+
   docker:
     enabled: true
     compose:
@@ -14,10 +19,11 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
       hibernate.format_sql: true
+      default_schema: realtor_agency
     show-sql: true
 
   mvc:
@@ -28,7 +34,6 @@ spring:
     enabled: true
     drop-first: false
     change-log: classpath:db/changelog/db.changelog-master.xml
-    default-schema: public
 
 server:
   port: 8181

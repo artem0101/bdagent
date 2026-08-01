@@ -2,13 +2,17 @@ package ru.education.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Subquery;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.education.dto.TransactionDto;
 import ru.education.entity.EmployeeEntity_;
+import ru.education.entity.SubjectEntity_;
 import ru.education.entity.TransactionEntity;
 import ru.education.entity.TransactionEntity_;
 import ru.education.repository.TransactionRepository;
@@ -55,6 +59,15 @@ public class TransactionService {
                 .stream()
                 .map(mapper::toTransactionDto)
                 .toList();
+    }
+
+    public Subquery<Long> findActiveTransaction(CriteriaBuilder cb, Subquery<Long> sq, Path<Long> subjectId) {
+        var root = sq.from(TransactionEntity.class);
+        var subject = root.join(TransactionEntity_.SUBJECT);
+
+        var predicate = cb.equal(subject.get(SubjectEntity_.ID), subjectId);
+
+        return sq.select(root.get(TransactionEntity_.ID)).distinct(true).where(predicate);
     }
 
 }

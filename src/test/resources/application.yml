@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: bdagent
+
+  sql:
+    init:
+      mode: always
+      schema-location: classpath:schema.sql
+
+  datasource:
+    url: jdbc:tc:postgresql:14://realtor_agency
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  liquibase:
+    enabled: true
+    drop-first: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    default-schema: public
+
+server:
+  port: 8181

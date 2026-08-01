@@ -1,18 +1,27 @@
-1spring:
+spring:
   application:
     name: bdagent
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/realtor_agency
-    username: postgres
-    password: postgres
+    url: jdbc:tc:postgresql:14://realtor_agency
+
+  sql:
+    init:
+      mode: always
+      schema-location: classpath:schema.sql
+
+  docker:
+    enabled: true
+    compose:
+      file: ./docker-compose.yml
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
       hibernate.format_sql: true
+      default_schema: realtor_agency
     show-sql: true
 
   mvc:
@@ -23,7 +32,6 @@
     enabled: true
     drop-first: false
     change-log: classpath:db/changelog/db.changelog-master.xml
-    default-schema: public
 
 server:
-  port: 8080
+  port: 8181

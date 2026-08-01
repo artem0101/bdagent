@@ -39,17 +39,22 @@ public class ClientService {
     @Transactional(
             readOnly = true
     )
-    public Collection<ClientDto> findClients(Long id, String surname, String name, String patronymic, Instant birthday) {
+    public Collection<ClientDto> findClients(
+            Long id,
+            String surname,
+            String name,
+            String patronymic,
+            Instant birthday) {
         var cb = this.em.getCriteriaBuilder();
         var cq = cb.createQuery(ClientEntity.class);
         var root = cq.from(ClientEntity.class);
         var predicates = new ArrayList<Predicate>();
 
-        addIfNotNull(id, v -> predicates.add(cb.equal(root.get(ClientEntity_.id), v)));
-        addLikeIgnoreCase(surname, root.get(ClientEntity_.surname), cb, predicates);
-        addLikeIgnoreCase(name, root.get(ClientEntity_.name), cb, predicates);
-        addLikeIgnoreCase(patronymic, root.get(ClientEntity_.patronymic), cb, predicates);
-        addIfNotNull(birthday, v -> predicates.add(cb.equal(root.get(ClientEntity_.birthday), v)));
+        addIfNotNull(id, v -> predicates.add(cb.equal(root.get(ClientEntity_.ID), v)));
+        addLikeIgnoreCase(surname, root.get(ClientEntity_.SURNAME), cb, predicates);
+        addLikeIgnoreCase(name, root.get(ClientEntity_.NAME), cb, predicates);
+        addLikeIgnoreCase(patronymic, root.get(ClientEntity_.PATRONYMIC), cb, predicates);
+        addIfNotNull(birthday, v -> predicates.add(cb.equal(root.get(ClientEntity_.BIRTHDAY), v)));
 
         cq.select(root)
                 .where(predicates.toArray(Predicate[]::new))
@@ -60,6 +65,10 @@ public class ClientService {
                 .stream()
                 .map(mapper::toClientDto)
                 .toList();
+    }
+
+    public ClientEntity findClientById(long clientId) {
+        return clientRepository.getReferenceById(clientId);
     }
 
 }

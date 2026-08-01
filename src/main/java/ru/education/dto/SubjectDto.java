@@ -24,5 +24,6 @@ public class SubjectDto {
     private BigDecimal price;
     private boolean isActive;
     private String type;
+    private long ownerId;
 
 }
