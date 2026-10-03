@@ -239,6 +239,7 @@ public final class Mapper {
                 .name(entity.getName())
                 .patronymic(entity.getPatronymic())
                 .phoneNumber(entity.getPhoneNumber())
+                .email(entity.getEmail())
                 .birthday(entity.getBirthday())
                 .build();
     }
@@ -250,6 +251,7 @@ public final class Mapper {
                 .name(dto.getName())
                 .patronymic(dto.getPatronymic())
                 .phoneNumber(dto.getPhoneNumber())
+                .email(dto.getEmail())
                 .birthday(dto.getBirthday())
                 .build();
     }

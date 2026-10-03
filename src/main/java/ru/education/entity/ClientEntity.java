@@ -44,6 +44,7 @@ public class ClientEntity implements Serializable {
     private String name;
     private String patronymic;
     private String phoneNumber;
+    private String email;
     private Instant birthday;
 
 }

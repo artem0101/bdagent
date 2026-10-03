@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.education.dto.EmployeeDto;
-import ru.education.dto.PagedEmployeesDto;
+import ru.education.dto.paged.PagedEmployeesDto;
 import ru.education.enums.PostType;
 import ru.education.service.EmployeeService;
 
@@ -36,9 +36,9 @@ public class EmployeeController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "ASC") String sortDirection) {
-
         var direction = Sort.Direction.fromString(sortDirection);
         var pageable = PageRequest.of(page, size, direction, sortBy);
+
         return service.findEmployees(id, surname, name, patronymic, post, pageable);
     }
 

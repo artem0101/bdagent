@@ -5,14 +5,15 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.Predicate;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.education.dto.ClientDto;
+import ru.education.dto.paged.PagedClientsDto;
 import ru.education.entity.ClientEntity;
 import ru.education.entity.ClientEntity_;
 import ru.education.repository.ClientRepository;
@@ -36,15 +37,14 @@ public class ClientService {
         this.clientRepository.save(this.mapper.toClientEntity(dto));
     }
 
-    @Transactional(
-            readOnly = true
-    )
-    public Collection<ClientDto> findClients(
+    @Transactional(readOnly = true)
+    public PagedClientsDto findClients(
             Long id,
             String surname,
             String name,
             String patronymic,
-            Instant birthday) {
+            Instant birthday,
+            Pageable pageable) {
         var cb = this.em.getCriteriaBuilder();
         var cq = cb.createQuery(ClientEntity.class);
         var root = cq.from(ClientEntity.class);
@@ -60,11 +60,16 @@ public class ClientService {
                 .where(predicates.toArray(Predicate[]::new))
                 .orderBy(cb.asc(root.get(ClientEntity_.ID)));
 
-        return em.createQuery(cq)
-                .getResultList()
+        var query = em.createQuery(cq);
+        query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        query.setMaxResults(pageable.getPageSize());
+
+        var result = query.getResultList()
                 .stream()
                 .map(mapper::toClientDto)
                 .toList();
+
+        return new PagedClientsDto(result, pageable.getPageNumber(), pageable.getPageSize());
     }
 
     public ClientEntity findClientById(long clientId) {

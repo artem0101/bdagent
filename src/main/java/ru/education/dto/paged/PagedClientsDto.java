@@ -1,10 +1,11 @@
-package ru.education.dto;
+package ru.education.dto.paged;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.education.dto.ClientDto;
 
 import java.util.Collection;
 
@@ -13,9 +14,9 @@ import java.util.Collection;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PagedEmployeesDto {
+public class PagedClientsDto {
 
-    private Collection<EmployeeDto> employees;
+    private Collection<ClientDto> clients;
     private int page;
     private int size;
 

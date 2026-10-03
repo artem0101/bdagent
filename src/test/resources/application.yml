@@ -8,7 +8,9 @@ spring:
       schema-location: classpath:schema.sql
 
   datasource:
-    url: jdbc:tc:postgresql:14://realtor_agency
+    url: jdbc:postgresql://localhost:5432/realtor_agency
+    username: postgres
+    password: postgres
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

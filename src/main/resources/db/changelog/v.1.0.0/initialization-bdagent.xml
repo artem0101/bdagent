@@ -199,6 +199,9 @@
             <column name="phone_number" type="BIGINT" remarks="Номер телефона">
                 <constraints nullable="false"/>
             </column>
+            <column name="email" type="TEXT" remarks="Почтовый ящик">
+                <constraints nullable="false"/>
+            </column>
             <column name="birthday" type="TIMESTAMP" remarks="Дата рождения">
                 <constraints nullable="false"/>
             </column>
