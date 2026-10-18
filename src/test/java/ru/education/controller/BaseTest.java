@@ -128,7 +128,37 @@ class BaseTest {
             Integer size,
             @DefaultValue("HttpStatus.OK.value()") int statusCode
     ) {
-        var path = new StringBuilder(EMPLOYEE_URL);
+        return getClient(
+                id,
+                surname,
+                name,
+                patronymic,
+                email,
+                phoneNumber,
+                birthday,
+                page,
+                size,
+                null,
+                null,
+                statusCode
+        );
+    }
+
+    protected PagedClientsDto getClient(
+            Long id,
+            String surname,
+            String name,
+            String patronymic,
+            String email,
+            String phoneNumber,
+            Instant birthday,
+            Integer page,
+            Integer size,
+            String sortBy,
+            String sortDirection,
+            @DefaultValue("HttpStatus.OK.value()") int statusCode
+    ) {
+        var path = new StringBuilder(CLIENT_URL);
         var params = new ArrayList<String>();
 
         if (id != null) params.add("id=" + id);
@@ -140,6 +170,8 @@ class BaseTest {
         if (birthday != null) params.add("birthday=" + birthday);
         if (page != null) params.add("page=" + page);
         if (size != null) params.add("size=" + size);
+        if (sortBy != null && !sortBy.isEmpty()) params.add("sortBy=" + sortBy);
+        if (sortDirection != null && !sortDirection.isEmpty()) params.add("sortDirection=" + sortDirection);
 
         for (int i = 0; i < params.size(); i++) {
             path.append(i == 0 ? "?" : "&").append(params.get(i));

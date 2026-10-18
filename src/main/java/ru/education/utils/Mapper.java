@@ -20,10 +20,21 @@ import ru.education.entity.TransactionEntity;
 import ru.education.enums.PostType;
 import ru.education.enums.SubjectType;
 
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public final class Mapper {
 
+    private static final String PATTERN_FORMAT = "dd.MM.yyyy";
+
     private Mapper() {
+    }
+
+    public Instant fromatDate(Instant date) {
+        var formatter = DateTimeFormatter.ofPattern(PATTERN_FORMAT);
+        formatter.format(date);
+        return date;
     }
 
     public EmployeeDto toEmployeeDto(EmployeeEntity entity) {
@@ -246,7 +257,7 @@ public final class Mapper {
 
     public ClientEntity toClientEntity(ClientDto dto) {
         return ClientEntity.builder()
-                .id(dto.getId())
+               // .id(dto.getId())
                 .surname(dto.getSurname())
                 .name(dto.getName())
                 .patronymic(dto.getPatronymic())
