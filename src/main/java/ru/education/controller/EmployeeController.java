@@ -25,13 +25,13 @@ public class EmployeeController {
     private final EmployeeService service;
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> addEmployee(@RequestBody @Validated EmployeeDto dto) {
-        var createdEmployee = service.addNewEmployee(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
+    public ResponseEntity<Void> addEmployee(@RequestBody @Validated EmployeeDto dto) {
+        service.addNewEmployee(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
-    public PagedEmployeesDto findEmployees(
+    public ResponseEntity<PagedEmployeesDto> findEmployees(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String surname,
             @RequestParam(required = false) String name,
@@ -44,7 +44,9 @@ public class EmployeeController {
         var direction = Sort.Direction.fromString(sortDirection.toLowerCase());
         var pageable = PageRequest.of(page, size, direction, sortBy);
 
-        return service.findEmployees(id, surname, name, patronymic, post, pageable);
+        var result = service.findEmployees(id, surname, name, patronymic, post, pageable);
+
+        return ResponseEntity.ok(result);
     }
 
 }

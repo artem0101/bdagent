@@ -1,13 +1,14 @@
 package ru.education.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ForeignKey;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,20 +34,21 @@ public class ClientToSubjectEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
     @Id
-    @OneToOne(
+    @ManyToOne(
             fetch = FetchType.LAZY
     )
     @JoinColumn(
             name = "client_id",
             nullable = false,
             referencedColumnName = "id",
-            unique = true,
             foreignKey = @ForeignKey(
                     name = "fk_client_to_subject_clients"
             )
     )
     private ClientEntity client;
+
     @Id
     @OneToOne(
             fetch = FetchType.LAZY

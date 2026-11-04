@@ -1,4 +1,4 @@
-1spring:
+spring:
   application:
     name: bdagent
 

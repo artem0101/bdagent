@@ -1,5 +1,6 @@
 package ru.education.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
@@ -43,7 +44,8 @@ public class GroundEntity implements Serializable {
     )
     private long id;
     @OneToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
     @JoinColumn(
             name = "subject_id",

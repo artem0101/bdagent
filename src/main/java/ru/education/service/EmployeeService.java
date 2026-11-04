@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.education.dto.EmployeeDto;
@@ -64,8 +65,18 @@ public class EmployeeService {
         }
 
         cq.select(root)
-                .where(predicates.toArray(Predicate[]::new))
-                .orderBy(cb.asc(root.get(EmployeeEntity_.ID)));
+                .where(predicates.toArray(Predicate[]::new));
+
+        var order = pageable.getSort().get().findFirst().get();
+
+        var sortedDirection = order.getDirection();
+        var sortedProperty = order.getProperty();
+
+        if (sortedDirection == Sort.Direction.DESC) {
+            cq.orderBy(cb.desc(root.get(getProperty(sortedProperty))));
+        } else {
+            cq.orderBy(cb.asc(root.get(getProperty(sortedProperty))));
+        }
 
         var query = em.createQuery(cq);
         query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
@@ -76,6 +87,17 @@ public class EmployeeService {
                 .toList();
 
         return new PagedEmployeesDto(result, pageable.getPageNumber(), pageable.getPageSize());
+    }
+
+    private String getProperty(String property) {
+        return switch (property) {
+            case EmployeeEntity_.ID -> EmployeeEntity_.ID;
+            case EmployeeEntity_.SURNAME -> EmployeeEntity_.SURNAME;
+            case EmployeeEntity_.NAME -> EmployeeEntity_.NAME;
+            case EmployeeEntity_.PATRONYMIC -> EmployeeEntity_.PATRONYMIC;
+            case "post" -> "post";
+            default -> throw new RuntimeException("incorrectProperty");
+        };
     }
 
 }

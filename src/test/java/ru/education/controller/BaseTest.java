@@ -14,9 +14,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 import ru.education.dto.ClientDto;
 import ru.education.dto.EmployeeDto;
+import ru.education.dto.GroundDto;
 import ru.education.dto.paged.PagedClientsDto;
 import ru.education.dto.paged.PagedEmployeesDto;
+import ru.education.dto.paged.PagedGroundsDto;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +32,7 @@ class BaseTest {
 
     protected static final String EMPLOYEE_URL = "/api/v1/employee";
     protected static final String CLIENT_URL = "/api/v1/client";
+    protected static final String GROUND_URL = "/api/v1/ground";
 
     @LocalServerPort
     private Integer port;
@@ -78,6 +82,21 @@ class BaseTest {
             Integer size,
             @DefaultValue("HttpStatus.OK.value()") int statusCode
     ) {
+        return getEmployee(id, surname, name, patronymic, post, page, size, null, null, statusCode);
+    }
+
+    protected PagedEmployeesDto getEmployee(
+            Long id,
+            String surname,
+            String name,
+            String patronymic,
+            String post,
+            Integer page,
+            Integer size,
+            String sortBy,
+            String sortDirection,
+            @DefaultValue("HttpStatus.OK.value()") int statusCode
+    ) {
         var path = new StringBuilder(EMPLOYEE_URL);
         var params = new ArrayList<String>();
 
@@ -88,6 +107,8 @@ class BaseTest {
         if (post != null && !post.isEmpty()) params.add("post=" + post);
         if (page != null) params.add("page=" + page);
         if (size != null) params.add("size=" + size);
+        if (sortBy != null && !sortBy.isEmpty()) params.add("sortBy=" + sortBy);
+        if (sortDirection != null && !sortDirection.isEmpty()) params.add("sortDirection=" + sortDirection);
 
         for (int i = 0; i < params.size(); i++) {
             path.append(i == 0 ? "?" : "&").append(params.get(i));
@@ -187,6 +208,80 @@ class BaseTest {
                 .extract()
                 .body()
                 .as(PagedClientsDto.class);
+    }
+
+    protected void createGround(GroundDto dto, int statusCode) {
+        given(requestSpecification)
+                .when()
+                .body(dto)
+                .post(GROUND_URL)
+                .then()
+                .statusCode(statusCode)
+                .log()
+                .ifValidationFails(LogDetail.ALL);
+    }
+
+    protected PagedGroundsDto getGround(
+            Long id,
+            String country,
+            String city,
+            String postalCode,
+            String street,
+            String number,
+            BigDecimal price,
+            Double area,
+            Integer page,
+            Integer size,
+            @DefaultValue("HttpStatus.OK.value()") int statusCode
+    ) {
+        return getGround(id, country, city, postalCode, street, number, price, area, page, size, null, null, statusCode);
+    }
+
+    protected PagedGroundsDto getGround(
+            Long id,
+            String country,
+            String city,
+            String postalCode,
+            String street,
+            String number,
+            BigDecimal price,
+            Double area,
+            Integer page,
+            Integer size,
+            String sortBy,
+            String sortDirection,
+            @DefaultValue("HttpStatus.OK.value()") int statusCode
+    ) {
+        var path = new StringBuilder(GROUND_URL);
+        var params = new ArrayList<String>();
+
+        if (id != null) params.add("id=" + id);
+        if (country != null && !country.isEmpty()) params.add("country=" + country);
+        if (city != null && !city.isEmpty()) params.add("city=" + city);
+        if (postalCode != null && !postalCode.isEmpty()) params.add("postalCode=" + postalCode);
+        if (street != null && !street.isEmpty()) params.add("street=" + street);
+        if (number != null && !number.isEmpty()) params.add("number=" + number);
+        if (price != null) params.add("price=" + price);
+        if (area != null) params.add("area=" + area);
+        if (page != null) params.add("page=" + page);
+        if (size != null) params.add("size=" + size);
+        if (sortBy != null && !sortBy.isEmpty()) params.add("sortBy=" + sortBy);
+        if (sortDirection != null && !sortDirection.isEmpty()) params.add("sortDirection=" + sortDirection);
+
+        for (int i = 0; i < params.size(); i++) {
+            path.append(i == 0 ? "?" : "&").append(params.get(i));
+        }
+
+        return given(requestSpecification)
+                .when()
+                .get(path.toString())
+                .then()
+                .statusCode(statusCode)
+                .log()
+                .ifValidationFails(LogDetail.ALL)
+                .extract()
+                .body()
+                .as(PagedGroundsDto.class);
     }
 
 }

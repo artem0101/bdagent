@@ -25,7 +25,7 @@ import java.io.Serializable;
 @Entity
 @Table(
         schema = "realtor_agency",
-        name = "subjects"
+        name = "apartments"
 )
 public class ApartmentEntity implements Serializable {
 

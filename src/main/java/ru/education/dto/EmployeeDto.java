@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeDto {
 
-    private long id;
+    private Long id;
 
     @NotNull
     private String surname;

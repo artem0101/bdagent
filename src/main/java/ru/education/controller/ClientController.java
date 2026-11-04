@@ -6,7 +6,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.education.dto.ClientDto;
 import ru.education.dto.paged.PagedClientsDto;
 import ru.education.service.ClientService;
@@ -18,11 +23,11 @@ import java.time.Instant;
 @RequiredArgsConstructor
 public class ClientController {
 
-    private final ClientService clientService;
+    private final ClientService service;
 
     @PostMapping
     public ResponseEntity<Void> addClient(@RequestBody @Validated ClientDto dto) {
-        clientService.addNewClient(dto);
+        service.addNewClient(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -46,7 +51,7 @@ public class ClientController {
         
         var direction = Sort.Direction.fromString(sortDirection.toLowerCase());
         var pageable = PageRequest.of(page, size, direction, sortBy);
-        var result = clientService.findClients(id, surname, name, patronymic, email, phoneNumber, birthday, pageable);
+        var result = service.findClients(id, surname, name, patronymic, email, phoneNumber, birthday, pageable);
 
         return ResponseEntity.ok(result);
     }

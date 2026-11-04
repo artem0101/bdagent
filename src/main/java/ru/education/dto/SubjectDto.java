@@ -15,15 +15,15 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class SubjectDto {
 
-    private long subjectId;
-    private String country;
-    private String city;
-    private String postalCode;
-    private String street;
-    private String number;
-    private BigDecimal price;
-    private boolean isActive;
-    private String type;
-    private long ownerId;
+    protected long subjectId;
+    protected String country;
+    protected String city;
+    protected String postalCode;
+    protected String street;
+    protected String number;
+    protected BigDecimal price;
+    protected boolean isActive;
+    protected String type;
+    protected long ownerId;
 
 }
