@@ -3,12 +3,16 @@ package ru.education.service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.education.dto.ApartmentDto;
+import ru.education.dto.paged.PagedApartmentsDto;
 import ru.education.entity.ClientToSubjectEntity;
 import ru.education.entity.ApartmentEntity;
 import ru.education.entity.ApartmentEntity_;
@@ -88,7 +92,7 @@ public class ApartmentService {
     @Transactional(
             readOnly = true
     )
-    public Collection<ApartmentDto> findApartments(
+    public PagedApartmentsDto findApartments(
             Long subjectId,
             String country,
             String city,
@@ -98,7 +102,8 @@ public class ApartmentService {
             BigDecimal price,
             Long id,
             Integer floor,
-            Integer room) {
+            Integer room,
+            Pageable pageable) {
         var cb = this.em.getCriteriaBuilder();
         var cq = cb.createQuery(ApartmentEntity.class);
         var root = cq.from(ApartmentEntity.class);
@@ -108,34 +113,53 @@ public class ApartmentService {
         addIfNotNull(floor, v -> predicates.add(cb.equal(root.get(ApartmentEntity_.FLOOR), v)));
         addIfNotNull(room, v -> predicates.add(cb.equal(root.get(ApartmentEntity_.ROOMS), v)));
 
-        if (Objects.nonNull(subjectId) || Objects.nonNull(country) || Objects.nonNull(city)
-                || Objects.nonNull(postalCode) || Objects.nonNull(street) || Objects.nonNull(number)
-                || Objects.nonNull(price)) {
-            var subject = root.join(ApartmentEntity_.SUBJECT);
+        boolean needsSubjectJoin = Objects.nonNull(subjectId) || Objects.nonNull(country) || Objects.nonNull(city) ||
+                                   Objects.nonNull(postalCode) || Objects.nonNull(street) || Objects.nonNull(number) ||
+                                   Objects.nonNull(price);
 
-            SubjectService.addSubjectPredicates(
-                    subjectId,
-                    country,
-                    city,
-                    postalCode,
-                    street,
-                    number,
-                    price,
-                    cb,
-                    predicates,
-                    subject
-            );
+        Path<?> subjectJoin = null;
+        if (needsSubjectJoin) {
+            subjectJoin = root.join(ApartmentEntity_.SUBJECT);
+            SubjectService.addSubjectPredicates(subjectId, country, city, postalCode, street, number, price, cb, predicates, subjectJoin);
         }
 
-        cq.select(root)
-                .where(predicates.toArray(Predicate[]::new))
-                .orderBy(cb.asc(root.get(ApartmentEntity_.ID)));
+        var order = pageable.getSort().get().findFirst().get();
+        var sortedProperty = order.getProperty();
 
-        return em.createQuery(cq)
-                .getResultList()
-                .stream()
+        Path<?> orderByPath;
+        if (sortedProperty.equals(SubjectEntity_.COUNTRY) ||
+            sortedProperty.equals(SubjectEntity_.CITY) ||
+            sortedProperty.equals(SubjectEntity_.POSTAL_CODE) ||
+            sortedProperty.equals(SubjectEntity_.STREET) ||
+            sortedProperty.equals(SubjectEntity_.NUMBER) ||
+            sortedProperty.equals(SubjectEntity_.PRICE)) {
+            if (subjectJoin == null) {
+                subjectJoin = root.join(ApartmentEntity_.SUBJECT);
+            }
+            orderByPath = subjectJoin.get(sortedProperty);
+        } else {
+            orderByPath = root.get(sortedProperty);
+        }
+
+        var sortedDirection = order.getDirection();
+
+        if (sortedDirection == Sort.Direction.DESC) {
+            cq.orderBy(cb.desc(orderByPath));
+        } else {
+            cq.orderBy(cb.asc(orderByPath));
+        }
+
+        cq.where(predicates.toArray(Predicate[]::new));
+
+        var query = em.createQuery(cq);
+        query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        query.setMaxResults(pageable.getPageSize());
+
+        var result = query.getResultList().stream()
                 .map(mapper::toApartmentDto)
                 .toList();
+
+        return new PagedApartmentsDto(result, pageable.getPageNumber(), pageable.getPageSize());
     }
 
 }
