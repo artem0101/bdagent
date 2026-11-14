@@ -55,7 +55,7 @@ class EmployeeControllerIntegrationTest extends BaseTest {
         Assertions.assertEquals(dto.getPatronymic(), employee.getPatronymic());
         Assertions.assertEquals(dto.getPost(), employee.getPost());
 
-        Long id = employee.getId();
+        var id = employee.getId();
 
         var resultById = getEmployee(id, null, null, null, null, 0, 10, HttpStatus.OK.value());
         Assertions.assertNotNull(resultById);
@@ -374,5 +374,345 @@ class EmployeeControllerIntegrationTest extends BaseTest {
         );
 
         createEmployee(employeeDto, HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldUpdateEmployee() {
+        var initialDto = new EmployeeDto(
+                null,
+                "Сидоров",
+                "Сидор",
+                "Сидорович",
+                PostType.OPERATOR.name()
+        );
+        createEmployee(initialDto, HttpStatus.CREATED.value());
+
+        var searchResult = getEmployee(
+                null,
+                initialDto.getSurname(),
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(searchResult.getEmployees().isEmpty());
+        var employeeId = searchResult.getEmployees().iterator().next().getId();
+
+        var updateDto = new EmployeeDto(
+                employeeId,
+                "Сидоров",
+                "Сидор",
+                "Сидорович",
+                PostType.DIRECTOR.name()
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + employeeId)
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+
+        var updatedResult = getEmployee(
+                employeeId,
+                null,
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(updatedResult.getEmployees().isEmpty());
+        var updatedEmployee = updatedResult.getEmployees().iterator().next();
+        
+        Assertions.assertEquals(updateDto.getId(), updatedEmployee.getId());
+        Assertions.assertEquals(updateDto.getSurname(), updatedEmployee.getSurname());
+        Assertions.assertEquals(updateDto.getName(), updatedEmployee.getName());
+        Assertions.assertEquals(updateDto.getPatronymic(), updatedEmployee.getPatronymic());
+        Assertions.assertEquals(updateDto.getPost(), updatedEmployee.getPost());
+    }
+
+    @Test
+    void shouldUpdateOnlySomeFields() {
+        var initialDto = new EmployeeDto(
+                null,
+                "Петров",
+                "Петр",
+                "Петрович",
+                PostType.OPERATOR.name()
+        );
+        createEmployee(initialDto, HttpStatus.CREATED.value());
+
+        var searchResult = getEmployee(
+                null,
+                initialDto.getSurname(),
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(searchResult.getEmployees().isEmpty());
+        var employeeId = searchResult.getEmployees().iterator().next().getId();
+
+        var updateDto = new EmployeeDto(
+                employeeId,
+                "Петров",
+                "Павел",
+                "Петрович",
+                PostType.DIRECTOR.name()
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + employeeId)
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+
+        var updatedResult = getEmployee(
+                employeeId,
+                null,
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value());
+        Assertions.assertFalse(updatedResult.getEmployees().isEmpty());
+        var updatedEmployee = updatedResult.getEmployees().iterator().next();
+        
+        Assertions.assertEquals(updateDto.getId(), updatedEmployee.getId());
+        Assertions.assertEquals("Павел", updatedEmployee.getName());
+        Assertions.assertEquals(PostType.DIRECTOR.name(), updatedEmployee.getPost());
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenUpdatingNonExistingEmployee() {
+        var updateDto = new EmployeeDto(
+                99999L,
+                "Иванов",
+                "Иван",
+                "Иванович",
+                PostType.DIRECTOR.name()
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + 99999L)
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void shouldHandleEmptySurnameDuringUpdate() {
+        var initialDto = new EmployeeDto(
+                null,
+                "Смирнов",
+                "Сергей",
+                "Сергеевич",
+                PostType.OPERATOR.name()
+        );
+        createEmployee(initialDto, HttpStatus.CREATED.value());
+
+        var searchResult = getEmployee(
+                null,
+                initialDto.getSurname(),
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(searchResult.getEmployees().isEmpty());
+        var employeeId = searchResult.getEmployees().iterator().next().getId();
+
+        var updateDto = new EmployeeDto(
+                employeeId,
+                "",
+                "Сергей",
+                "Сергеевич",
+                PostType.OPERATOR.name()
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + employeeId)
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldHandleEmptyNameDuringUpdate() {
+        var initialDto = new EmployeeDto(
+                null,
+                "Кузнецов",
+                "Константин",
+                "Константинович",
+                PostType.OPERATOR.name()
+        );
+        createEmployee(initialDto, HttpStatus.CREATED.value());
+
+        var searchResult = getEmployee(
+                null,
+                initialDto.getSurname(),
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(searchResult.getEmployees().isEmpty());
+        var employeeId = searchResult.getEmployees().iterator().next().getId();
+
+        var updateDto = new EmployeeDto(
+                employeeId,
+                "Кузнецов",
+                "", // Empty name
+                "Константинович",
+                PostType.OPERATOR.name()
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + employeeId)
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldHandleEmptyPatronymicDuringUpdate() {
+        var initialDto = new EmployeeDto(
+                null,
+                "Попов",
+                "Алексей",
+                "Алексеевич",
+                PostType.OPERATOR.name()
+        );
+        createEmployee(initialDto, HttpStatus.CREATED.value());
+
+        var searchResult = getEmployee(
+                null,
+                initialDto.getSurname(),
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(searchResult.getEmployees().isEmpty());
+        var employeeId = searchResult.getEmployees().iterator().next().getId();
+
+        var updateDto = new EmployeeDto(
+                employeeId,
+                "Попов",
+                "Алексей",
+                "",
+                PostType.OPERATOR.name()
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + employeeId)
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldHandleEmptyPostDuringUpdate() {
+        var initialDto = new EmployeeDto(
+                null,
+                "Соколов",
+                "Михаил",
+                "Михайлович",
+                PostType.OPERATOR.name()
+        );
+        createEmployee(initialDto, HttpStatus.CREATED.value());
+
+        var searchResult = getEmployee(
+                null,
+                initialDto.getSurname(),
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(searchResult.getEmployees().isEmpty());
+        var employeeId = searchResult.getEmployees().iterator().next().getId();
+
+        var updateDto = new EmployeeDto(
+                employeeId,
+                "Соколов",
+                "Михаил",
+                "Михайлович",
+                ""
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + employeeId)
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void shouldUpdateEmployeePostType() {
+        var initialDto = new EmployeeDto(
+                null,
+                "Васильев",
+                "Николай",
+                "Николаевич",
+                PostType.OPERATOR.name()
+        );
+        createEmployee(initialDto, HttpStatus.CREATED.value());
+
+        var searchResult = getEmployee(
+                null,
+                initialDto.getSurname(),
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(searchResult.getEmployees().isEmpty());
+        var employeeId = searchResult.getEmployees().iterator().next().getId();
+
+        var updateDto = new EmployeeDto(
+                employeeId,
+                "Васильев",
+                "Николай",
+                "Николаевич",
+                PostType.DIRECTOR.name()
+        );
+
+        given(requestSpecification)
+                .body(updateDto)
+                .put(EMPLOYEE_URL + "/" + employeeId)
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+
+        var updatedResult = getEmployee(
+                employeeId,
+                null,
+                null,
+                null,
+                null,
+                0,
+                10,
+                HttpStatus.OK.value()
+        );
+        Assertions.assertFalse(updatedResult.getEmployees().isEmpty());
+        var updatedEmployee = updatedResult.getEmployees().iterator().next();
+        
+        Assertions.assertEquals(PostType.DIRECTOR.name(), updatedEmployee.getPost());
     }
 }

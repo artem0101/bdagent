@@ -35,11 +35,11 @@ public class GroundEntity implements Serializable {
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "apartments_id_seq"
+            generator = "grounds_id_seq"
     )
     @SequenceGenerator(
-            name = "apartments_id_seq",
-            sequenceName = "realtor_agency.apartments_id_seq",
+            name = "grounds_id_seq",
+            sequenceName = "realtor_agency.grounds_id_seq",
             allocationSize = 1
     )
     private long id;

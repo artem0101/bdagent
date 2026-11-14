@@ -5,41 +5,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.http.HttpStatus;
-import ru.education.dto.ClientDto;
 import ru.education.dto.GroundDto;
 
 import ru.education.enums.SubjectType;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GroundControllerIntegrationTest extends BaseTest {
 
     private Long clientId;
 
     @BeforeEach
     void setUp() {
-        var dto = new ClientDto(
-                null,
-                "Тихонов",
-                "Тихон",
-                "Тихонович",
-                "+79101234568",
-                "test@example.com",
-                Instant.now().minus(1000, ChronoUnit.DAYS)
-        );
-        createClient(dto, HttpStatus.CREATED.value());
-
         clientId = getClient(
                 null,
-                dto.getSurname(),
-                dto.getName(),
-                dto.getPatronymic(),
+                andreevDto.getSurname(),
+                andreevDto.getName(),
+                andreevDto.getPatronymic(),
                 null,
                 null,
                 null,

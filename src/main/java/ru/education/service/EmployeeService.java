@@ -41,6 +41,56 @@ public class EmployeeService {
         return this.mapper.toEmployeeDto(savedEntity);
     }
 
+    @Transactional
+    public EmployeeDto updateEmployee(Long id, EmployeeDto dto) {
+        var existingEntity = this.repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
+        
+        // Update fields from DTO
+        if (dto.getSurname() != null) {
+            existingEntity.setSurname(dto.getSurname());
+        }
+        if (dto.getName() != null) {
+            existingEntity.setName(dto.getName());
+        }
+        if (dto.getPatronymic() != null) {
+            existingEntity.setPatronymic(dto.getPatronymic());
+        }
+        if (dto.getPost() != null) {
+            existingEntity.setPost(Enum.valueOf(PostType.class, dto.getPost()));
+        }
+        
+        var updatedEntity = this.repository.save(existingEntity);
+        return this.mapper.toEmployeeDto(updatedEntity);
+    }
+
+    @Transactional
+    public EmployeeDto updateEmployeeWithNotFoundHandling(Long id, EmployeeDto dto) {
+        var existingEntity = this.repository.findById(id)
+                .orElse(null);
+        
+        if (existingEntity == null) {
+            throw new RuntimeException("Employee not found with id: " + id);
+        }
+        
+        // Update fields from DTO
+        if (dto.getSurname() != null) {
+            existingEntity.setSurname(dto.getSurname());
+        }
+        if (dto.getName() != null) {
+            existingEntity.setName(dto.getName());
+        }
+        if (dto.getPatronymic() != null) {
+            existingEntity.setPatronymic(dto.getPatronymic());
+        }
+        if (dto.getPost() != null) {
+            existingEntity.setPost(Enum.valueOf(PostType.class, dto.getPost()));
+        }
+        
+        var updatedEntity = this.repository.save(existingEntity);
+        return this.mapper.toEmployeeDto(updatedEntity);
+    }
+
     @Transactional(readOnly = true)
     public PagedEmployeesDto findEmployees(
             Long id,
