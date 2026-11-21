@@ -44,6 +44,7 @@ public final class Mapper {
                 .name(entity.getName())
                 .patronymic(entity.getPatronymic())
                 .post(entity.getPost().name())
+                .isDeleted(entity.isDeleted())
                 .build();
     }
 
@@ -53,6 +54,7 @@ public final class Mapper {
                 .name(dto.getName())
                 .patronymic(dto.getPatronymic())
                 .post(PostType.valueOf(dto.getPost()))
+                .isDeleted(dto.getIsDeleted() != null ? dto.getIsDeleted() : false)
                 .build();
     }
 

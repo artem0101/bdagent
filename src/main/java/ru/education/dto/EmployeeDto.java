@@ -27,5 +27,7 @@ public class EmployeeDto {
 
     @NotNull
     private String post;
+    
+    private Boolean isDeleted;
 
 }

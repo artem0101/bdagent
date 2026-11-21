@@ -48,5 +48,8 @@ public class EmployeeEntity implements Serializable {
     @Basic
     @Enumerated(EnumType.STRING)
     private PostType post;
+    
+    @Basic
+    private boolean isDeleted;
 
 }

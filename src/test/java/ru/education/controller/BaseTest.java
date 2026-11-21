@@ -122,6 +122,35 @@ class BaseTest {
                 .ifValidationFails(LogDetail.ALL);
     }
 
+    protected void deleteEmployee(long id, int statusCode) {
+        given(requestSpecification)
+                .delete(EMPLOYEE_URL + "/" + id)
+                .then()
+                .statusCode(statusCode);
+    }
+
+    protected void updateEmployee(EmployeeDto dto, long id, int statusCode) {
+        given(requestSpecification)
+                .body(dto)
+                .put(EMPLOYEE_URL + "/" + id)
+                .then()
+                .statusCode(statusCode);
+    }
+
+    protected PagedEmployeesDto getEmployee(
+            Long id,
+            String surname,
+            String name,
+            String patronymic,
+            String post,
+            Boolean isDeleted,
+            Integer page,
+            Integer size,
+            @DefaultValue("HttpStatus.OK.value()") int statusCode
+    ) {
+        return getEmployee(id, surname, name, patronymic, post, isDeleted, page, size, null, null, statusCode);
+    }
+
     protected PagedEmployeesDto getEmployee(
             Long id,
             String surname,
@@ -132,7 +161,7 @@ class BaseTest {
             Integer size,
             @DefaultValue("HttpStatus.OK.value()") int statusCode
     ) {
-        return getEmployee(id, surname, name, patronymic, post, page, size, null, null, statusCode);
+        return getEmployee(id, surname, name, patronymic, post, null, page, size, null, null, statusCode);
     }
 
     protected PagedEmployeesDto getEmployee(
@@ -147,6 +176,22 @@ class BaseTest {
             String sortDirection,
             @DefaultValue("HttpStatus.OK.value()") int statusCode
     ) {
+        return getEmployee(id, surname, name, patronymic, post, null, page, size, sortBy, sortDirection, statusCode);
+    }
+
+    protected PagedEmployeesDto getEmployee(
+            Long id,
+            String surname,
+            String name,
+            String patronymic,
+            String post,
+            Boolean isDeleted,
+            Integer page,
+            Integer size,
+            String sortBy,
+            String sortDirection,
+            @DefaultValue("HttpStatus.OK.value()") int statusCode
+    ) {
         var path = new StringBuilder(EMPLOYEE_URL);
         var params = new ArrayList<String>();
 
@@ -155,6 +200,7 @@ class BaseTest {
         if (name != null && !name.isEmpty()) params.add("name=" + name);
         if (patronymic != null && !patronymic.isEmpty()) params.add("patronymic=" + patronymic);
         if (post != null && !post.isEmpty()) params.add("post=" + post);
+        if (isDeleted != null) params.add("isDeleted=" + isDeleted);
         if (page != null) params.add("page=" + page);
         if (size != null) params.add("size=" + size);
         if (sortBy != null && !sortBy.isEmpty()) params.add("sortBy=" + sortBy);

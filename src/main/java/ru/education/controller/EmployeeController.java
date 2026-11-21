@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import ru.education.dto.EmployeeDto;
 import ru.education.dto.paged.PagedEmployeesDto;
 import ru.education.enums.PostType;
@@ -40,6 +41,7 @@ public class EmployeeController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String patronymic,
             @RequestParam(required = false) PostType post,
+            @RequestParam(required = false) Boolean isDeleted,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -47,7 +49,7 @@ public class EmployeeController {
         var direction = Sort.Direction.fromString(sortDirection.toLowerCase());
         var pageable = PageRequest.of(page, size, direction, sortBy);
 
-        var result = service.findEmployees(id, surname, name, patronymic, post, pageable);
+        var result = service.findEmployees(id, surname, name, patronymic, post, isDeleted, pageable);
 
         return ResponseEntity.ok(result);
     }
@@ -56,8 +58,14 @@ public class EmployeeController {
     public ResponseEntity<Void> updateEmployee(
             @PathVariable Long id,
             @RequestBody @Validated EmployeeDto dto) {
-        service.updateEmployeeWithNotFoundHandling(id, dto);
+        service.updateEmployee(id, dto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+        service.deleteEmployee(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @ExceptionHandler(RuntimeException.class)

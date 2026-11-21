@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,7 +23,6 @@ import ru.education.utils.Mapper;
 import static ru.education.service.Utils.addIfNotNull;
 import static ru.education.service.Utils.addLikeIgnoreCase;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class EmployeeService {
@@ -42,38 +40,27 @@ public class EmployeeService {
     }
 
     @Transactional
-    public EmployeeDto updateEmployee(Long id, EmployeeDto dto) {
+    public void deleteEmployee(Long id) {
         var existingEntity = this.repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
         
-        // Update fields from DTO
-        if (dto.getSurname() != null) {
-            existingEntity.setSurname(dto.getSurname());
-        }
-        if (dto.getName() != null) {
-            existingEntity.setName(dto.getName());
-        }
-        if (dto.getPatronymic() != null) {
-            existingEntity.setPatronymic(dto.getPatronymic());
-        }
-        if (dto.getPost() != null) {
-            existingEntity.setPost(Enum.valueOf(PostType.class, dto.getPost()));
+        if (existingEntity.isDeleted()) {
+            throw new RuntimeException("Employee already deleted with id: " + id);
         }
         
-        var updatedEntity = this.repository.save(existingEntity);
-        return this.mapper.toEmployeeDto(updatedEntity);
+        existingEntity.setDeleted(true);
+        this.repository.save(existingEntity);
     }
 
     @Transactional
-    public EmployeeDto updateEmployeeWithNotFoundHandling(Long id, EmployeeDto dto) {
-        var existingEntity = this.repository.findById(id)
+    public EmployeeDto updateEmployee(Long id, EmployeeDto dto) {
+        var existingEntity = this.repository.findByIdAndIsDeleted(id,false)
                 .orElse(null);
         
-        if (existingEntity == null) {
+        if (existingEntity == null || existingEntity.isDeleted()) {
             throw new RuntimeException("Employee not found with id: " + id);
         }
-        
-        // Update fields from DTO
+
         if (dto.getSurname() != null) {
             existingEntity.setSurname(dto.getSurname());
         }
@@ -98,6 +85,7 @@ public class EmployeeService {
             String name,
             String patronymic,
             PostType post,
+            Boolean isDeleted,
             Pageable pageable) {
         var cb = this.em.getCriteriaBuilder();
         var cq = cb.createQuery(EmployeeEntity.class);
@@ -110,8 +98,14 @@ public class EmployeeService {
         addLikeIgnoreCase(patronymic, root.get(EmployeeEntity_.PATRONYMIC), cb, predicates);
 
         if (Objects.nonNull(post)) {
-            var postAsString = root.get(EmployeeEntity_.post).as(String.class);
+            var postAsString = root.get(EmployeeEntity_.POST).as(String.class);
             Utils.addLikeIgnoreCase(post.name(), postAsString, cb, predicates);
+        }
+
+        if (Objects.nonNull(isDeleted)) {
+            predicates.add(cb.equal(root.get(EmployeeEntity_.IS_DELETED), isDeleted));
+        } else {
+            predicates.add(cb.equal(root.get(EmployeeEntity_.IS_DELETED), false));
         }
 
         cq.select(root)
@@ -145,7 +139,8 @@ public class EmployeeService {
             case EmployeeEntity_.SURNAME -> EmployeeEntity_.SURNAME;
             case EmployeeEntity_.NAME -> EmployeeEntity_.NAME;
             case EmployeeEntity_.PATRONYMIC -> EmployeeEntity_.PATRONYMIC;
-            case "post" -> "post";
+            case EmployeeEntity_.POST -> EmployeeEntity_.POST;
+            case EmployeeEntity_.IS_DELETED -> EmployeeEntity_.IS_DELETED;
             default -> throw new RuntimeException("incorrectProperty");
         };
     }
