@@ -17,6 +17,7 @@ import ru.education.entity.ApartmentEntity;
 import ru.education.entity.ApartmentEntity_;
 import ru.education.entity.SubjectEntity_;
 import ru.education.repository.ApartmentRepository;
+import ru.education.repository.ClientRepository;
 import ru.education.repository.ClientToSubjectRepository;
 import ru.education.utils.Mapper;
 
@@ -34,13 +35,13 @@ public class ApartmentService {
     private EntityManager em;
     private final ApartmentRepository apartmentRepository;
     private final ClientToSubjectRepository clientToSubjectRepository;
-    private final ClientService clientService;
+    private final ClientRepository clientRepository;
     private final TransactionService transactionService;
     private final Mapper mapper;
 
     @Transactional
     public void addNewApartment(ApartmentDto dto) {
-        var client = clientService.findClientById(dto.getOwnerId());
+        var client = clientRepository.getReferenceById(dto.getOwnerId());
 
         var apartmentEntity = this.mapper.toApartmentEntity(dto);
         this.apartmentRepository.save(apartmentEntity);

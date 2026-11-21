@@ -272,7 +272,7 @@ class ClientControllerIntegrationTest extends BaseTest {
 
         var result = getClient(
                 null, 
-                null,
+                dto.getSurname(),
                 null,
                 null,
                 null,

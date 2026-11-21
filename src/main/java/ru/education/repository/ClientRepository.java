@@ -13,6 +13,7 @@ import java.util.Optional;
 @Transactional
 public interface ClientRepository extends JpaRepository<ClientEntity, Long>, JpaSpecificationExecutor<ClientEntity> {
 
-    @Query("SELECT с FROM ClientEntity с WHERE с.id = :id AND с.isDeleted = :isDeleted")
+    @Query("SELECT e FROM ClientEntity e WHERE e.id = :id AND e.isDeleted = :isDeleted")
     Optional<ClientEntity> findByIdAndIsDeleted(long id, Boolean isDeleted);
+
 }

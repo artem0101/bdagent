@@ -3,9 +3,9 @@ package ru.education.service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.Predicate;
-import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import lombok.AllArgsConstructor;
 
@@ -29,7 +29,7 @@ public class ClientService {
 
     @PersistenceContext
     private EntityManager em;
-    private final ClientRepository clientRepository;
+    private final ClientRepository repository;
     private final Mapper mapper;
 
     @Transactional
@@ -37,7 +37,48 @@ public class ClientService {
         var birthday = dto.getBirthday().atZone(ZoneOffset.UTC).toLocalDate();
         dto.setBirthday(birthday.atStartOfDay(ZoneOffset.UTC).toInstant());
 
-        this.clientRepository.save(this.mapper.toClientEntity(dto));
+        this.repository.save(this.mapper.toClientEntity(dto));
+    }
+
+    @Transactional
+    public void deleteClient(Long id) {
+        var existingEntity = this.repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
+        
+        if (existingEntity.isDeleted()) {
+            throw new RuntimeException("Client already deleted with id: " + id);
+        }
+        
+        existingEntity.setDeleted(true);
+        this.repository.save(existingEntity);
+    }
+
+    @Transactional
+    public void updateClient(Long id, ClientDto dto) {
+        var existingEntity = this.repository.findByIdAndIsDeleted(id,false)
+                .orElse(null);
+        
+        if (existingEntity == null || existingEntity.isDeleted()) {
+            throw new RuntimeException("Client not found with id: " + id);
+        }
+
+        if (dto.getSurname() != null) {
+            existingEntity.setSurname(dto.getSurname());
+        }
+        if (dto.getName() != null) {
+            existingEntity.setName(dto.getName());
+        }
+        if (dto.getPatronymic() != null) {
+            existingEntity.setPatronymic(dto.getPatronymic());
+        }
+        if (dto.getEmail() != null) {
+            existingEntity.setEmail(dto.getEmail());
+        }
+        if (dto.getPhoneNumber() != null) {
+            existingEntity.setPhoneNumber(dto.getPhoneNumber());
+        }
+        
+        var updatedEntity = this.repository.save(existingEntity);
     }
 
     @Transactional(readOnly = true)
@@ -48,7 +89,7 @@ public class ClientService {
             String patronymic,
             String email,
             String phoneNumber,
-            Instant birthday,
+            Boolean isDeleted,
             Pageable pageable) {
         var cb = this.em.getCriteriaBuilder();
         var cq = cb.createQuery(ClientEntity.class);
@@ -62,19 +103,19 @@ public class ClientService {
         addLikeIgnoreCase(email, root.get(ClientEntity_.EMAIL), cb, predicates);
         addLikeIgnoreCase(phoneNumber, root.get(ClientEntity_.PHONE_NUMBER), cb, predicates);
 
-        if (birthday != null) {
-            var birthdayTemp = birthday.atZone(ZoneOffset.UTC).toLocalDate();
-            var newBirthdayTemp = birthdayTemp.atStartOfDay(ZoneOffset.UTC).toInstant();
-            predicates.add(cb.equal(root.get(ClientEntity_.BIRTHDAY), newBirthdayTemp));
+        if (Objects.nonNull(isDeleted)) {
+            predicates.add(cb.equal(root.get(ClientEntity_.IS_DELETED), isDeleted));
+        } else {
+            predicates.add(cb.equal(root.get(ClientEntity_.IS_DELETED), false));
         }
+
+        cq.select(root)
+                .where(predicates.toArray(Predicate[]::new));
 
         var order = pageable.getSort().get().findFirst().get();
 
         var sortedDirection = order.getDirection();
         var sortedProperty = order.getProperty();
-
-        cq.select(root)
-                .where(predicates.toArray(Predicate[]::new));
 
         if (sortedDirection == Sort.Direction.DESC) {
             cq.orderBy(cb.desc(root.get(getProperty(sortedProperty))));
@@ -86,16 +127,11 @@ public class ClientService {
         query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
         query.setMaxResults(pageable.getPageSize());
 
-        var result = query.getResultList()
-                .stream()
+        var result = query.getResultList().stream()
                 .map(mapper::toClientDto)
                 .toList();
 
         return new PagedClientsDto(result, pageable.getPageNumber(), pageable.getPageSize());
-    }
-
-    public ClientEntity findClientById(long clientId) {
-        return clientRepository.getReferenceById(clientId);
     }
 
     private String getProperty(String property) {
@@ -106,8 +142,8 @@ public class ClientService {
             case ClientEntity_.PATRONYMIC -> ClientEntity_.PATRONYMIC;
             case ClientEntity_.EMAIL -> ClientEntity_.EMAIL;
             case ClientEntity_.PHONE_NUMBER -> ClientEntity_.PHONE_NUMBER;
-            default -> throw new RuntimeException("incorrectPropery");
+            case ClientEntity_.IS_DELETED -> ClientEntity_.IS_DELETED;
+            default -> throw new RuntimeException("incorrectProperty");
         };
     }
 }
-
