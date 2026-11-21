@@ -75,7 +75,8 @@ class BaseTest {
                 "Евдокимович",
                 "+79111234568",
                 "test1@example.com",
-                Instant.now().minus(1000, ChronoUnit.DAYS)
+                Instant.now().minus(1000, ChronoUnit.DAYS),
+                false
         );
         createClient(evdokimovDto, HttpStatus.CREATED.value());
         andreevDto = new ClientDto(
@@ -85,7 +86,8 @@ class BaseTest {
                 "Андреевич",
                 "+79131234568",
                 "test@example.com",
-                Instant.now().minus(1000, ChronoUnit.DAYS)
+                Instant.now().minus(1000, ChronoUnit.DAYS),
+                false
         );
         createClient(andreevDto, HttpStatus.CREATED.value());
         valeryanovDto = new ClientDto(
@@ -95,7 +97,8 @@ class BaseTest {
                 "Валерьянович",
                 "+79121234568",
                 "test@example.com",
-                Instant.now().minus(1000, ChronoUnit.DAYS)
+                Instant.now().minus(1000, ChronoUnit.DAYS),
+                false
         );
         createClient(valeryanovDto, HttpStatus.CREATED.value());
         tihonovDto = new ClientDto(
@@ -105,7 +108,8 @@ class BaseTest {
                 "Тихонович",
                 "+79101234568",
                 "test@example.com",
-                Instant.now().minus(1000, ChronoUnit.DAYS)
+                Instant.now().minus(1000, ChronoUnit.DAYS),
+                false
         );
         createClient(tihonovDto, HttpStatus.CREATED.value());
     }

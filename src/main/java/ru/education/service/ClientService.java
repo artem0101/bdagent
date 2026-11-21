@@ -78,7 +78,7 @@ public class ClientService {
             existingEntity.setPhoneNumber(dto.getPhoneNumber());
         }
         
-        var updatedEntity = this.repository.save(existingEntity);
+        this.repository.save(existingEntity);
     }
 
     @Transactional(readOnly = true)

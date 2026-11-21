@@ -27,7 +27,8 @@ public class EmployeeDto {
 
     @NotNull
     private String post;
-    
-    private Boolean isDeleted;
+
+    @Builder.Default
+    private Boolean isDeleted = false;
 
 }

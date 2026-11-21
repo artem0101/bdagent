@@ -22,6 +22,7 @@ import ru.education.enums.SubjectType;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Component
 public final class Mapper {
@@ -54,7 +55,7 @@ public final class Mapper {
                 .name(dto.getName())
                 .patronymic(dto.getPatronymic())
                 .post(PostType.valueOf(dto.getPost()))
-                .isDeleted(dto.getIsDeleted() != null ? dto.getIsDeleted() : false)
+                .isDeleted(dto.getIsDeleted() != null && dto.getIsDeleted())
                 .build();
     }
 
@@ -254,18 +255,20 @@ public final class Mapper {
                 .phoneNumber(entity.getPhoneNumber())
                 .email(entity.getEmail())
                 .birthday(entity.getBirthday())
+                .isDeleted(entity.isDeleted())
                 .build();
     }
 
     public ClientEntity toClientEntity(ClientDto dto) {
+        var isDeleted = Objects.nonNull(dto.getIsDeleted()) && dto.getIsDeleted();
         return ClientEntity.builder()
-               // .id(dto.getId())
                 .surname(dto.getSurname())
                 .name(dto.getName())
                 .patronymic(dto.getPatronymic())
                 .phoneNumber(dto.getPhoneNumber())
                 .email(dto.getEmail())
                 .birthday(dto.getBirthday())
+                .isDeleted(isDeleted)
                 .build();
     }
 
