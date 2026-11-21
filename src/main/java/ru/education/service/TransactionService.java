@@ -7,7 +7,6 @@ import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Subquery;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.education.dto.TransactionDto;
@@ -23,7 +22,6 @@ import java.util.Collection;
 
 import static ru.education.service.Utils.addIfNotNull;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class TransactionService {

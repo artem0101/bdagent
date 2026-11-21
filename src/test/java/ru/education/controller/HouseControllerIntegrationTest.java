@@ -1,6 +1,8 @@
 package ru.education.controller;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.http.HttpStatus;
 import ru.education.dto.HouseDto;
 
@@ -8,7 +10,6 @@ import java.math.BigDecimal;
 
 import static io.restassured.RestAssured.given;
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HouseControllerIntegrationTest extends BaseTest {
 
     private Long clientId;

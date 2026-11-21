@@ -3,7 +3,6 @@ package ru.education.controller;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.http.HttpStatus;
 import ru.education.dto.GroundDto;
 
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GroundControllerIntegrationTest extends BaseTest {
 
     private Long clientId;

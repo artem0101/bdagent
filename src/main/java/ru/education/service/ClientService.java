@@ -4,15 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.Predicate;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.temporal.Temporal;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,7 +23,6 @@ import ru.education.utils.Mapper;
 import static ru.education.service.Utils.addIfNotNull;
 import static ru.education.service.Utils.addLikeIgnoreCase;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class ClientService {

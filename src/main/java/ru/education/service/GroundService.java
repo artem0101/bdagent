@@ -5,7 +5,6 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,6 @@ import java.util.Objects;
 
 import static ru.education.service.Utils.addIfNotNull;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class GroundService {
